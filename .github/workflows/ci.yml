@@ -25,11 +25,11 @@ jobs:
       - name: Upload release
         uses: actions/upload-artifact@v7
         with:
-          path: "build/out/BreZygisk-v*-release.zip"
+          path: "build/out/Zygisk-Ultra-v*-release.zip"
           archive: false
 
       - name: Upload debug
         uses: actions/upload-artifact@v7
         with:
-          path: "build/out/BreZygisk-v*-debug.zip"
+          path: "build/out/Zygisk-Ultra-v*-debug.zip"
           archive: false

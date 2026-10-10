@@ -5,18 +5,18 @@
       "title": "Главная",
       "unknown": "Неизвестно",
       "androidVersion": "Версия Android",
-      "linuxKernelVersion": "Версия Linux",
+      "linuxKernelVersion": "Версия ядра",
       "status": {
         "notWorking": "Не работает",
-        "ok": "Работает",
-        "partially": "Частично работает"
+        "ok": "Работает!",
+        "partially": "Работает частично"
       },
       "info": {
         "version": "Версия",
-        "root": "Root реализация",
+        "root": "реализация рут",
         "zygote": {
-          "injected": "Инъецировано",
-          "notInjected": "Не инъецировано",
+          "injected": "Работает",
+          "notInjected": "Не работает",
           "unknown": "Неизвестно"
         }
       }
@@ -27,7 +27,7 @@
         "title": "Обзор",
         "status": {
           "tracing": "Состояние",
-          "stopping": "Остановка",
+          "stopping": "Остановить",
           "stopped": "Остановлено",
           "exiting": "Выход",
           "unknown": "Неизвестно"
@@ -41,7 +41,7 @@
     },
     "modules": {
       "title": "Модули",
-      "notAvaliable": "Здесь нет модулей, использующих Zygisk.",
+      "notAvaliable": "Здесь нет модулей, использующих реализацию Zygisk.",
       "arch": "Архитектура: "
     },
     "settings": {
@@ -56,11 +56,11 @@
       },
       "theme": {
         "title": "Сменить тему WebUI",
-        "description": "Выберите вашу системную тему для текущего WebUI."
+        "description": "Выберите вашу системную тему для WebUI."
       },
       "font": {
         "title": "Включить системный шрифт",
-        "description": "Эта опция включит системный шрифт в текущем WebUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
+        "description": "Эта опция включит системный шрифт в WebUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
       },
       "moduleDevelopers": "Разработчик(и) модуля",
       "WebUIDevelopers": "Разработчик(и) WebUI",
@@ -75,7 +75,7 @@
       "theme": {
         "dark": "Тёмная тема",
         "light": "Светлая тема",
-        "amoled": "Amoled тема",
+        "amoled": "Тема с глубоким черным",
         "system_based": "Системная тема"
       }
     }

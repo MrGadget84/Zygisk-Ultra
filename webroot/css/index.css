@@ -8,6 +8,11 @@
   --font: #fff;
   --desc: #c9c9c9;
   --bright: #8d1d19;
+  --status-ok-bg: #193a28;
+  --status-ok-text: #f2fff5;
+  --status-error-bg: #8d1d19;
+  --status-partial-bg: #766000;
+  --status-text: var(--lock);
   --dim: #1c1c1c;
   --dim-brigther: #3d3d3d;
   --icon: #494949;
@@ -15,12 +20,15 @@
   --small-card: var(--icon-bc);
   --button: var(--background);
   --button-enabled: #535353;
-  --desktop-navbar: #252525;
+  --desktop-navbar: #080808;
   --desktop-navicon: #3a3a3a;
+  --nav-label-inactive: #777777;
+  --nav-icon-active-filter: invert(1);
+  --nav-icon-inactive-filter: invert(0.42);
 
   /* Locked Color */
   --lock: #fff;
-  --font-family: 'Poppins', sans-serif;
+  --font-family: 'Onest', sans-serif;
 }
 
 * {
@@ -64,6 +72,11 @@ a {
   padding: 15px 15px;
   border-radius: 15px;
   color: var(--lock);
+}
+
+/* Use a theme-aware foreground for the Zygisk status label. */
+#rz_state {
+  color: var(--status-text, var(--lock));
 }
 
 .content {

@@ -1,10 +1,10 @@
-# ReZygisk
+# Zygisk-Ultra
 
 [English](../README.md)
 
-ReZygisk es un fork de Zygisk Next, una implementación independiente de Zygisk, que provee soporte para la API de Zygisk en KernelSU, APatch y Magisk.
+Zygisk-Ultra es un fork de Zygisk Next, una implementación independiente de Zygisk, que provee soporte para la API de Zygisk en KernelSU, APatch y Magisk.
 
-El código base fue reescrito completamente en C, lo que no solo trae un código mucho más limpio y fácil de seguir, sino también binarios más livianos y rápidos. También se introdujeron linkers personalizados para proteger a ReZygisk de detecciones futuras, sin usar el linker del sistema bajo circunstancias normales y evadiendo así cualquier detección basada en linkers.
+El código base fue reescrito completamente en C, lo que no solo trae un código mucho más limpio y fácil de seguir, sino también binarios más livianos y rápidos. También se introdujeron linkers personalizados para proteger a Zygisk-Ultra de detecciones futuras, sin usar el linker del sistema bajo circunstancias normales y evadiendo así cualquier detección basada en linkers.
 
 ## ¿Por qué?
 
@@ -33,7 +33,7 @@ Los desarrolladores de Zygisk Next son conocidos y de confianza en la comunidad 
 
 ### 1. Elegí el zip correcto
 
-La elección de la build/zip es importante, ya que va a determinar qué tan oculto y estable sea ReZygisk. Igual, esto no es una tarea difícil:
+La elección de la build/zip es importante, ya que va a determinar qué tan oculto y estable sea Zygisk-Ultra. Igual, esto no es una tarea difícil:
 
 - `release` debería ser la elegida para la mayoría de los casos; saca el registro de logs a nivel de aplicación y ofrece binarios más optimizados.
 - `debug`, por otro lado, ofrece lo contrario: muchos logs y cero optimizaciones. Por este motivo, **solo deberías usarlo para debugging (depuración)** y **cuando necesites sacar logs para abrir un Issue**.
@@ -47,32 +47,32 @@ Después de elegir la build correcta, tendrías que flashearla usando tu gestor 
 Después de flashear, revisá los logs de instalación para asegurarte de que no haya errores. Si está todo bien, podés reiniciar tu dispositivo.
 
 > [!WARNING]
-> Los usuarios de Magisk deben desactivar el Zygisk que viene integrado, ya que va a entrar en conflicto con ReZygisk. Podés hacerlo yendo a la sección de `Configuración` (`Settings`) en Magisk y desactivando la opción `Zygisk`.
+> Los usuarios de Magisk deben desactivar el Zygisk que viene integrado, ya que va a entrar en conflicto con Zygisk-Ultra. Podés hacerlo yendo a la sección de `Configuración` (`Settings`) en Magisk y desactivando la opción `Zygisk`.
 
 ### 3. Verificá la instalación
 
-Después de reiniciar, podés verificar si ReZygisk está funcionando bien revisando la descripción del módulo en la sección de `Módulos` de tu gestor de root. La descripción debería indicar que los demonios (daemons) necesarios están corriendo. Por ejemplo, si tu entorno soporta tanto 64-bit como 32-bit, debería verse parecido a esto: `[Monitor: ✅, ReZygisk 64-bit: ✅, ReZygisk 32-bit: ✅] Standalone implementation of Zygisk.`
+Después de reiniciar, podés verificar si Zygisk-Ultra está funcionando bien revisando la descripción del módulo en la sección de `Módulos` de tu gestor de root. La descripción debería indicar que los demonios (daemons) necesarios están corriendo. Por ejemplo, si tu entorno soporta tanto 64-bit como 32-bit, debería verse parecido a esto: `[Monitor: ✅, Zygisk-Ultra 64-bit: ✅, Zygisk-Ultra 32-bit: ✅] Standalone implementation of Zygisk.`
 
 ## Traducción
 
-Actualmente hay dos maneras diferentes de aportar con traducciones para ReZygisk:
+Actualmente hay dos maneras diferentes de aportar con traducciones para Zygisk-Ultra:
 
 - Para traducir el README, podés crear un archivo nuevo en la carpeta `READMEs`, siguiendo el formato de nombre `README_<idioma>.md`, donde `<idioma>` es el código del idioma (por ejemplo, `README_es-AR.md` para Español de Argentina), y abrir un pull request a la rama `main` con tus cambios.
-- Para traducir la WebUI de ReZygisk, primero deberías aportar a nuestro [Crowdin](https://crowdin.com/project/rezygisk). Una vez aprobado, bajate el archivo `.json` de ahí y abrí un pull request con tus cambios (agregando el archivo `.json` a la carpeta `webroot/lang` y tus créditos al archivo `TRANSLATOR.md`, en orden alfabético).
+- Para traducir la WebUI de Zygisk-Ultra, primero deberías aportar a nuestro [Crowdin](https://crowdin.com/project/zygiskultra). Una vez aprobado, bajate el archivo `.json` de ahí y abrí un pull request con tus cambios (agregando el archivo `.json` a la carpeta `webroot/lang` y tus créditos al archivo `TRANSLATOR.md`, en orden alfabético).
 
 ## Soporte
 
-Por cualquier duda relacionada con ReZygisk u otros proyectos de PerformanC, sentite libre de sumarte a cualquiera de los siguientes canales:
+Por cualquier duda relacionada con Zygisk-Ultra u otros proyectos de PerformanC, sentite libre de sumarte a cualquiera de los siguientes canales:
 
 - Canal de Discord: [PerformanC](https://discord.gg/uPveNfTuCJ)
-- Canal de Telegram de ReZygisk: [@rezygisk](https://t.me/rezygisk)
+- Canal de Telegram de Zygisk-Ultra: [@zygiskultra](https://t.me/zygiskultra)
 - Canal de Telegram de PerformanC: [@performancorg](https://t.me/performancorg)
 - Grupo de Signal de PerformanC: [@performanc](https://signal.group/#CjQKID3SS8N5y4lXj3VjjGxVJnzNsTIuaYZjj3i8UhipAS0gEhAedxPjT5WjbOs6FUuXptcT)
 
 ## Contribución
 
-Es obligatorio seguir las [Guías de Contribución](https://github.com/PerformanC/contributing) de PerformanC para aportar a ReZygisk. Esto incluye respetar su Política de Seguridad, su Código de Conducta y el estándar de sintaxis.
+Es obligatorio seguir las [Guías de Contribución](https://github.com/PerformanC/contributing) de PerformanC para aportar a Zygisk-Ultra. Esto incluye respetar su Política de Seguridad, su Código de Conducta y el estándar de sintaxis.
 
 ## Licencia
 
-ReZygisk está bajo la licencia [AGPL 3.0](./LICENSE). Podés leer más sobre esto en la [Open Source Initiative](https://opensource.org/licenses/AGPL-3.0).
+Zygisk-Ultra está bajo la licencia [AGPL 3.0](./LICENSE). Podés leer más sobre esto en la [Open Source Initiative](https://opensource.org/licenses/AGPL-3.0).

@@ -2,10 +2,10 @@
 
 set -e
 
-export TMP_PATH=/data/adb/rezygisk
+export TMP_PATH=/data/adb/zygiskultra
 rm -rf "$TMP_PATH"
 
-rm -f /data/adb/service.d/rezygisk.sh
+rm -f /data/adb/service.d/zygiskultra.sh
 
 # INFO: Only removes if dir is empty
 rmdir /data/adb/service.d

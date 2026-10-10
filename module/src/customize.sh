@@ -5,7 +5,7 @@ zygisksu
 for i in ${modules}; do
 	[[ -e "/data/adb/modules/${i}" ]] && touch "/data/adb/modules/${i}/disable"
 done
-[[ -e "/data/adb/modules/brezygisk" ]] && touch "/data/adb/modules/brezygisk/remove"
+[[ -e "/data/adb/modules/zygiskultra" ]] && touch "/data/adb/modules/zygiskultra/remove"
 
 # shellcheck disable=SC2034
 SKIPUNZIP=1
@@ -34,7 +34,7 @@ if [ "$BOOTMODE" ] && [ "$KSU" ]; then
   if [ "$(which magisk)" ]; then
     ui_print "*********************************************************"
     ui_print "! Multiple root implementation is NOT supported!"
-    ui_print "! Please uninstall Magisk before installing ReZygisk"
+    ui_print "! Please uninstall Magisk before installing Zygisk-Ultra"
     abort    "*********************************************************"
   fi
   elif [ "$BOOTMODE" ] && [ "$APATCH" ]; then
@@ -61,7 +61,7 @@ else
 fi
 
 VERSION=$(grep_prop version "${TMPDIR}/module.prop")
-ui_print "- Installing ReZygisk $VERSION"
+ui_print "- Installing Zygisk-Ultra $VERSION"
 
 # check android
 if [ "$API" -lt 25 ]; then
@@ -106,12 +106,12 @@ extract "$ZIPFILE" 'module.prop'     "$MODPATH"
 extract "$ZIPFILE" 'post-fs-data.sh' "$MODPATH"
 extract "$ZIPFILE" 'service.sh'      "$MODPATH"
 extract "$ZIPFILE" 'uninstall.sh'    "$MODPATH"
-extract "$ZIPFILE" 'rezygisk.sh' "/data/adb/service.d/"
+extract "$ZIPFILE" 'zygiskultra.sh' "/data/adb/service.d/"
 
 cp "$MODPATH/module.prop" "$MODPATH/module.prop.bak"
 
 chmod +x "$MODPATH/uninstall.sh"
-chmod +x "/data/adb/service.d/rezygisk.sh"
+chmod +x "/data/adb/service.d/zygiskultra.sh"
 
 mv "$TMPDIR/sepolicy.rule" "$MODPATH"
 

@@ -772,7 +772,7 @@ int save_mns_fd(int pid, enum MountNamespaceState mns_state, struct root_impl im
       goto finalize_mns_fork;
     }
 
-    if (access("/data/adb/brezygisk/unmount", F_OK) == 0) {
+    if (access("/data/adb/zygiskultra/unmount", F_OK) == 0) {
 			if (mns_state == Clean) {
 				unshare(CLONE_NEWNS);
 

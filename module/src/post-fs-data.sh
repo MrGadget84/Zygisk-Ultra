@@ -36,12 +36,12 @@ create_sys_perm() {
   chcon u:object_r:system_file:s0 $1
 }
 
-export TMP_PATH=/data/adb/rezygisk
+export TMP_PATH=/data/adb/zygiskultra
 rm -rf "$TMP_PATH"
 
 create_sys_perm $TMP_PATH
 
-# INFO: We need to cleanup the module.prop to its default state before ReZygisk writes to it
+# INFO: We need to cleanup the module.prop to its default state before Zygisk-Ultra writes to it
 #         so that it never duplicates the module status in there.
 cp "$MODDIR/module.prop.bak" "$MODDIR/module.prop"
 

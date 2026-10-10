@@ -73,7 +73,7 @@ $(MODULE_DONE): $(LOADER_DONE) $(ZYGISKD_DONE) $(MODULE_INPUTS)
 
 
 	@echo "Copying module files..."
-	@cp module/src/verify.sh module/src/sepolicy.rule module/src/rezygisk.sh $(MODULE_OUT)/
+	@cp module/src/verify.sh module/src/sepolicy.rule module/src/zygiskultra.sh $(MODULE_OUT)/
 
 	@echo "Customizing module.prop..."
 	@sed -e 's/$${moduleId}/$(MODULE_ID)/g'                                             \
@@ -148,5 +148,5 @@ updateWebUI:
 	@echo Updating WebUI...
 	$(ADB_SHELL) su -c 'rm -rf /data/local/tmp/webroot'
 	$(ADB_PUSH) webroot /data/local/tmp
-	$(ADB_SHELL) su -c 'rm -rf /data/adb/modules/rezygisk/webroot'
-	$(ADB_SHELL) su -c 'cp -r /data/local/tmp/webroot /data/adb/modules/rezygisk'
+	$(ADB_SHELL) su -c 'rm -rf /data/adb/modules/zygiskultra/webroot'
+	$(ADB_SHELL) su -c 'cp -r /data/local/tmp/webroot /data/adb/modules/zygiskultra'
