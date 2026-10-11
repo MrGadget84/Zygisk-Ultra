@@ -229,7 +229,7 @@ static bool update_mnt_ns(enum mount_namespace_state mns_state, bool dry_run) {
   ret (*old_##func)(__VA_ARGS__);     \
   ret new_##func(__VA_ARGS__)
 
-/* INFO: ReZygisk already performs a fork in zygisk_context::fork_pre, because of that,
+/* INFO: Zygisk-Ultra already performs a fork in zygisk_context::fork_pre, because of that,
            we avoid duplicate fork in nativeForkAndSpecialize and nativeForkSystemServer
            by caching the pid in fork_pre function and only performing fork if the pid
            is non-0, or in other words, if we (libzygisk.so) already forked.
@@ -516,7 +516,7 @@ static void initialize_jni_hook(void) {
   can_hook_jni = true;
   do_hook_zygote(env);
 
-  /* INFO: ART leaks through libc strings from ReZygisk. We immediately
+  /* INFO: ART leaks through libc strings from Zygisk-Ultra. We immediately
              clear them here. */
   registers_clear();
 }
@@ -959,9 +959,9 @@ static bool load_modules_only(void) {
       LOGE("Failed to load module [%s]", lib_path);
 
       /* INFO: In case a module failed to load, update the list of available modules
-           in ReZygiskd to avoid a mismatch between the loaded modules in ReZygisk
+           in ReZygiskd to avoid a mismatch between the loaded modules in Zygisk-Ultra
            Zygote library and the available modules in ReZygiskd. */
-      /* TODO: Update the list of modules for ReZygisk monitor, so that it can update
+      /* TODO: Update the list of modules for Zygisk-Ultra monitor, so that it can update
                  for WebUI. That is simply cosmetic, though. */
       rezygiskd_remove_module(i);
 
@@ -1349,7 +1349,7 @@ static void hook_unloader(void) {
     LOGE("Failed to load modules in hook_unloader");
   }
 
-  LOGD("ReZygisk unloader hooked successfully");
+  LOGD("Zygisk-Ultra unloader hooked successfully");
 }
 
 static void unhook_functions(void) {

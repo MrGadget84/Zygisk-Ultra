@@ -1,5 +1,5 @@
 const developmentResponse = {
-  '/system/bin/cat /data/adb/rezygisk/state.json': {
+  '/system/bin/cat /data/adb/zygiskultra/state.json': {
     errno: 0,
     stdout: `
       {
@@ -25,7 +25,7 @@ const developmentResponse = {
     `,
     stderr: ''
   },
-  'cat /data/adb/modules/rezygisk/module.prop': {
+  'cat /data/adb/modules/zygiskultra/module.prop': {
     errno: 0,
     stdout: 'version=v1.0.0 (505-7e3db00-release)',
     stderr: ''
@@ -42,10 +42,10 @@ const developmentResponse = {
   },
   'module_lister': {
     errno: 0,
-    stdout: 'Really Cool Module\n\nSome ReZygisk Module',
+    stdout: 'Really Cool Module\n\nSome Zygisk-Ultra Module',
     stderr: ''
   },
-  '/system/bin/ls /data/adb/modules/rezygisk/webroot/lang': {
+  '/system/bin/ls /data/adb/modules/zygiskultra/webroot/lang': {
     errno: 0,
     stdout: 'ar_EG.json\nde_DE.json\nes_AR.json\nid_ID.json\nja_JP.json\npt_BR.json\ntr_TR.json\nvi_VN.json\nen_US.json\nes_MX.json\nit_IT.json\nko_KR.json\nru_RU.json\nuk_UA.json\nzh_CN.json',
     stderr: ''

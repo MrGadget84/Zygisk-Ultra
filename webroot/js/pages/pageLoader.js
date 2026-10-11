@@ -421,7 +421,7 @@ export async function loadPage(pageId) {
         const minipage_header = `
           <div class="header" style="padding-left: 20px; display: flex; align-items: center; justify-content: initial;">
             <div id="minipage_close" class="back_icon" style="width: 36px; height: 36px; margin-right: 6px;"></div>
-            <div id="minipage_title">ReZygisk: {{title}}</div>
+            <div id="minipage_title">Zygisk-Ultra: {{title}}</div>
           </div>
         `
         pageSpecificContent.insertAdjacentHTML('afterbegin', minipage_header)
@@ -531,7 +531,7 @@ export async function loadMiniPage(miniPageId, unloadCb) {
   const navbar = document.getElementById('navbar')
   const navbar_support_div = document.getElementById('navbar_support_div')
 
-  page_content.style.transition = navbar.style.transition = 'filter 0.3s'
+  page_content.style.transition = navbar.style.transition = 'filter 0.1s'
   page_content.style.filter = navbar.style.filter = 'blur(10px)'
   /* INFO: Not allow it to interact with the page, just click to close */
   page_content.style.pointerEvents = navbar_support_div.style.pointerEvents = 'none'
@@ -542,9 +542,9 @@ export async function loadMiniPage(miniPageId, unloadCb) {
     if (isClick) history.back()
 
     const minipage_content = document.getElementById('minipage_content')
-    minipage_content.style.animation = 'fade-out 0.2s'
+    minipage_content.style.animation = 'fade-out 0.1s'
 
-    page_content.style.transition = navbar.style.transition = 'filter 0.2s'
+    page_content.style.transition = navbar.style.transition = 'filter 0.1s'
     page_content.style.filter = navbar.style.filter = null
     page_content.style.pointerEvents = navbar_support_div.style.pointerEvents = null
 
@@ -571,7 +571,7 @@ export async function loadMiniPage(miniPageId, unloadCb) {
     transform: translate(-50%, -50%);
     z-index: 1;
     background: none;
-    animation: fade-in 0.3s;
+    animation: fade-in 0.1s;
   `
 
   minipage_content.innerHTML = `
@@ -641,7 +641,7 @@ window.addEventListener('error', function (event) {
 
   console.error('Unhandled error:', event.error)
 
-  exec(`echo "Error: ${event.message}\n\n${event.error.stack}" > /data/adb/rezygisk/webui_error.log`)
+  exec(`echo "Error: ${event.message}\n\n${event.error.stack}" > /data/adb/zygiskultra/webui_error.log`)
 })
 
 window.addEventListener('unhandledrejection', function (event) {
@@ -649,7 +649,7 @@ window.addEventListener('unhandledrejection', function (event) {
 
   console.error('Unhandled promise rejection:', event.reason)
 
-  exec(`echo "Error (Unhandled Rejection): ${event.reason}\n\n${event.reason.stack}" > /data/adb/rezygisk/webui_error.log`)
+  exec(`echo "Error (Unhandled Rejection): ${event.reason}\n\n${event.reason.stack}" > /data/adb/zygiskultra/webui_error.log`)
 })
 
 window.addEventListener('popstate', async () => {
@@ -657,3 +657,31 @@ window.addEventListener('popstate', async () => {
 
   await loadPage('home')
 })
+
+const setIntervalId = setInterval(() => {
+	const toggle = document.getElementById('umount_toggle')
+
+	if (toggle) {
+		clearInterval(setIntervalId)
+
+		exec("[[ -e '/data/adb/Zygisk-Ultra/unmount' ]] && echo '1' || echo '0'").then(result => {
+			if (result.errno === 0) {
+				Boolean(Number(result.stdout)) ? (toggle.checked = true) : (toggle.checked = false)
+			}
+		})
+
+		document.addEventListener('change', async event => {
+			if (event.target && event.target.matches('#umount_toggle')) {
+				const toggle = document.getElementById('umount_toggle')
+				const enabled = !toggle.checked
+
+				if (enabled) {
+					exec('rm -f /data/adb/Zygisk-Ultra/unmount')
+				} else {
+					exec('mkdir -p /data/adb/Zygisk-Ultra')
+					exec('touch /data/adb/Zygisk-Ultra/unmount')
+				}
+			}
+		})
+	}
+}, 1000)

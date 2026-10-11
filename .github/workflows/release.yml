@@ -1,0 +1,51 @@
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup NDK_PATH
+        run: echo "NDK_PATH=$ANDROID_NDK_LATEST_HOME" >> "$GITHUB_ENV"
+
+      - name: Build
+        run: make all -j"$(nproc)"
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Zygisk-Ultra-release
+          path: build/out/Zygisk-Ultra-*-release.zip
+          archive: false
+
+      - name: Upload debug artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Zygisk-Ultra-debug
+          path: build/out/Zygisk-Ultra-*-debug.zip
+          archive: false
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v3
+        with:
+          name: Zygisk-Ultra ${{ github.ref_name }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: build/out/Zygisk-Ultra-*-release.zip

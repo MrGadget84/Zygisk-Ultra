@@ -7,7 +7,7 @@
 
 __attribute__((visibility("default")))
 void entry(void *addr, size_t size, int tango_flag) {
-  LOGD("ReZygisk%s library injected, version %s", tango_flag ? " [TANGO]" : "", ZKSU_VERSION);
+  LOGD("Zygisk-Ultra%s library injected, version %s", tango_flag ? " [TANGO]" : "", ZKSU_VERSION);
 
   start_addr = addr;
   block_size = size;

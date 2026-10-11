@@ -3,7 +3,7 @@ import utils from '../utils.js'
 import { fullScreen } from '../../kernelsu.js'
 
 function _writeState(ConfigState) {
-  return localStorage.setItem('/ReZygisk/webui_config', JSON.stringify(ConfigState))
+  return localStorage.setItem('/Zygisk-Ultra/webui_config', JSON.stringify(ConfigState))
 }
 
 export async function loadOnce() {
@@ -24,10 +24,10 @@ export async function load() {
     enableSystemFont: false
   }
 
-  let webui_config = localStorage.getItem('/ReZygisk/webui_config')
+  let webui_config = localStorage.getItem('/Zygisk-Ultra/webui_config')
 
   if (!webui_config) {
-    localStorage.setItem('/ReZygisk/webui_config', JSON.stringify(ConfigState))
+    localStorage.setItem('/Zygisk-Ultra/webui_config', JSON.stringify(ConfigState))
   } else {
     ConfigState = JSON.parse(webui_config)
   }
@@ -45,7 +45,6 @@ export async function load() {
   rz_webui_fullscreen_switch.checked = !!ConfigState.disableFullscreen
 
   utils.addListener(rz_webui_fullscreen_switch, 'click', () => {
-    /* INFO: This is swapped, as it meant to disable the fullscreen */
     ConfigState.disableFullscreen = !ConfigState.disableFullscreen
     _writeState(ConfigState)
 
@@ -56,7 +55,6 @@ export async function load() {
   rz_webui_font_switch.checked = !!ConfigState.enableSystemFont
 
   utils.addListener(rz_webui_font_switch, 'click', () => {
-    /* INFO: This is swapped, as it meant to enable the system font */
     ConfigState.enableSystemFont = !ConfigState.enableSystemFont
 
     if (ConfigState.enableSystemFont) {
