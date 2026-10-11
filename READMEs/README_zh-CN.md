@@ -1,6 +1,6 @@
 # Zygisk-Ultra
 
-[English](/README.md)
+[English](../README.md)
 
 Zygisk-Ultra 是 Zygisk Next 的一个分支，是 Zygisk 的独立实现，为 KernelSU、APatch 和 Magisk 提供 Zygisk API 支持。
 
@@ -22,11 +22,11 @@ Zygisk Next 的开发者是 Android 社区中著名且值得信赖的，然而�
 |-------------------|------------------------------------|
 | `Android NDK`     | Android 原生开发工具包             |
 
-### C++ 依赖项
+### C 依赖项
 
 | 依赖项        | 描述                                |
 |---------------|-------------------------------------|
-| `lsplt`       | Android 的简单 PLT Hook 库          |
+| `PLTI`       | Android 的简单 PLT Hook 库          |
 | `CSOLoader`   | 最先进（SOTA）的 Linux 自定义链接器 |
 
 ## 安装
