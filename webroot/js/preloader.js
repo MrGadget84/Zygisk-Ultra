@@ -4,6 +4,60 @@ import { setThemeData, themeList } from './themes/main.js'
 import { setLight } from './themes/light.js'
 import { loadPage } from './pages/pageLoader.js'
 
+/* INFO: Provide short tactile feedback for user-facing controls. */
+const HAPTIC_INTERACTIVE_SELECTOR = [
+  'button:not(:disabled)',
+  'a[href]',
+  'input:not([type="hidden"]):not(:disabled)',
+  'select:not(:disabled)',
+  'textarea:not(:disabled)',
+  'label',
+  '[role="button"]',
+  '[role="switch"]',
+  '.button',
+  '.radio',
+  '.back_icon',
+  '.card_animation',
+  '.action_card',
+  '[theme-data]',
+  '[lang-data]',
+  '[credit-link]',
+  '[id$="_page_toggle"]',
+  '[style*="cursor: pointer"]'
+].join(',')
+
+let lastHapticAt = 0
+
+function triggerHapticFeedback() {
+  const now = Date.now()
+  if (now - lastHapticAt < 70) return
+  lastHapticAt = now
+
+  if (typeof ksu !== 'undefined') {
+    exec('cmd vibrator_manager synced oneshot 12 >/dev/null 2>&1 || cmd vibrator vibrate 12 >/dev/null 2>&1')
+      .catch(() => {})
+    return
+  }
+
+  try {
+    if (typeof navigator.vibrate === 'function') navigator.vibrate(12)
+  } catch {
+    /* INFO: Haptics are optional; unsupported devices should still work normally. */
+  }
+}
+
+document.addEventListener('pointerdown', (event) => {
+  if (event.isPrimary === false) return
+
+  const target = event.target instanceof Element
+    ? event.target.closest(HAPTIC_INTERACTIVE_SELECTOR)
+    : null
+
+  if (!target || target.closest('[inert], [aria-disabled="true"]')) return
+
+  triggerHapticFeedback()
+}, { capture: true, passive: true })
+
 /* INFO: This sets the default theme to system if not set */
 let sys_theme = localStorage.getItem('/Zygisk-Ultra/theme')
 if (!sys_theme) sys_theme = setThemeData('system')

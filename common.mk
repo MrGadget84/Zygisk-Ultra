@@ -4,7 +4,7 @@ API_LEVEL ?= 25
 ARCHS ?= arm64-v8a armeabi-v7a x86 x86_64
 ARCH ?= arm64-v8a
 
-VER_NAME ?= $(shell tag=$$(git -C "$(ROOT_DIR)" describe --tags --exact-match 2>/dev/null); if [ -n "$$tag" ]; then printf '%s\n' "$${tag#v}"; else printf 'dev-%s\n' "$$(git -C "$(ROOT_DIR)" rev-parse --short HEAD 2>/dev/null || echo unknown)"; fi)
+VER_NAME ?= $(shell tag=$$(git -C "$(ROOT_DIR)" describe --tags --exact-match 2>/dev/null); if [ -n "$$tag" ]; then printf '%s\n' "$${tag#v}"; else printf 'main-%s\n' "$$(git -C "$(ROOT_DIR)" rev-parse --short HEAD 2>/dev/null || echo unknown)"; fi)
 VER_CODE ?= $(shell git -C "$(ROOT_DIR)" rev-list --count HEAD 2>/dev/null || echo 1)
 VER_CODE2 ?= $(shell git -C "$(ROOT_DIR)" rev-list upstream/main..HEAD --count 2>/dev/null || echo 1)
 COMMIT_HASH ?= $(shell git -C "$(ROOT_DIR)" rev-parse --verify --short HEAD 2>/dev/null || echo unknown)
