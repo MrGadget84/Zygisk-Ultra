@@ -1,11 +1,11 @@
 {
-  "langName": "Русский (Россия)",
+  "langName": "ZOV Язык (Победа!)",
   "pages": {
     "home": {
       "title": "Главная",
       "unknown": "Неизвестно",
-      "androidVersion": "Версия Android",
-      "linuxKernelVersion": "Версия ядра",
+      "androidVersion": "Версия Путина",
+      "linuxKernelVersion": "Версия СВО",
       "status": {
         "notWorking": "Не работает",
         "ok": "Работает!",
@@ -13,7 +13,7 @@
       },
       "info": {
         "version": "Версия",
-        "root": "реализация рут",
+        "root": "реализация шахедов",
         "zygote": {
           "injected": "Работает",
           "notInjected": "Не работает",
@@ -40,38 +40,38 @@
       }
     },
     "modules": {
-      "title": "Модули",
-      "notAvaliable": "Здесь нет модулей, использующих реализацию Zygisk.",
-      "arch": "Архитектура: "
+      "title": "Шахеды",
+      "notAvaliable": "Здесь нет шахедов.",
+      "arch": "Тип шахедов: "
     },
     "settings": {
       "title": "Настройки",
       "language": {
         "title": "Сменить язык",
-        "description": "Сменить язык WebUI на выбранный."
+        "description": "Сменить язык ZovUI на выбранный."
       },
       "fullscreen": {
-        "title": "Выключить полноэкранный режим в WebUI",
-        "description": "С данной опцией, WebUI не будет занимать весь экран."
+        "title": "Выключить полноэкранный режим в ZovUI",
+        "description": "С данной опцией, ZovUI не будет занимать весь экран."
       },
       "theme": {
-        "title": "Сменить тему WebUI",
-        "description": "Выберите вашу системную тему для WebUI."
+        "title": "Сменить тему ZovUI",
+        "description": "Выберите вашу системную тему для ZovUI."
       },
       "font": {
         "title": "Включить системный шрифт",
-        "description": "Эта опция включит системный шрифт в WebUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
+        "description": "Эта опция включит системный шрифт в ZovUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
       },
-      "moduleDevelopers": "Разработчик(и) модуля",
-      "WebUIDevelopers": "Разработчик(и) WebUI",
-      "orginalDevelopers": "Разработчик(и) оригинального модуля",
-      "moduleLicense": "Лицензия модуля"
+      "moduleDevelopers": "Разработчик(и) шахедов",
+      "WebUIDevelopers": "Разработчик(и) ZovUI",
+      "orginalDevelopers": "Разработчик(и) оригинального шахеда",
+      "moduleLicense": "Лицензия шахеда"
     },
     "mini_settings_language": {
       "title": "Сменить язык"
     },
     "mini_settings_theme": {
-      "title": "Сменить тему WebUI",
+      "title": "Сменить тему ZovUI",
       "theme": {
         "dark": "Тёмная тема",
         "light": "Светлая тема",
