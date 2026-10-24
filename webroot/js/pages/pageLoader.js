@@ -9,6 +9,13 @@ import utils from './utils.js'
 const moduleName = 'TreatWheel'
 const head = document.getElementsByTagName('head')[0]
 const miniPageRegex = /mini_(.*)_(.*)/
+/* INFO: UI parent pages can differ from their storage path. Language and theme
+         now open from Customization, even though their files live under settings. */
+const miniPageParentOverrides = {
+  mini_settings_language: 'mini_settings_customization',
+  mini_settings_theme: 'mini_settings_customization'
+}
+const miniPageCloseBindings = new Map()
 
 export const allMainPages = [
   'home',
@@ -19,7 +26,8 @@ export const allMainPages = [
 
 export const allMiniPages = [
   'mini_settings_language',
-  'mini_settings_theme'
+  'mini_settings_theme',
+  'mini_settings_customization'
 ]
 
 export const allPages = [ ...allMainPages, ...allMiniPages ]
@@ -175,6 +183,90 @@ function isMiniPage(pageId) {
   return miniPageRegex.test(pageId)
 }
 
+/* INFO: Every mini page needs its own title and back button, including when
+         navigating from one mini page to another (for example Customization -> Theme). */
+function ensureMiniPageHeader(pageSpecificContent) {
+  if (pageSpecificContent.querySelector('.back_icon')) return
+
+  const minipage_header = `
+    <div class="header" style="padding-left: 20px; display: flex; align-items: center; justify-content: initial;">
+      <div id="minipage_close" class="back_icon" style="width: 36px; height: 36px; margin-right: 6px;"></div>
+      <div id="minipage_title">Zygisk-Ultra: {{title}}</div>
+    </div>
+  `
+
+  pageSpecificContent.insertAdjacentHTML('afterbegin', minipage_header)
+}
+
+function getMiniPageParent(pageId) {
+  if (miniPageParentOverrides[pageId]) return miniPageParentOverrides[pageId]
+
+  const miniPageIdData = miniPageRegex.exec(pageId)
+  return miniPageIdData ? miniPageIdData[1] : null
+}
+
+function detachMiniPageCloseListener(pageId) {
+  const binding = miniPageCloseBindings.get(pageId)
+  if (!binding) return
+
+  binding.backIcon.removeEventListener('click', binding.onClick)
+  window.removeEventListener('popstate', binding.onPopState)
+  miniPageCloseBindings.delete(pageId)
+}
+
+function attachMiniPageCloseListener(pageId, pageSpecificContent) {
+  /* INFO: Reusing a mini page must not accumulate click/popstate listeners. */
+  detachMiniPageCloseListener(pageId)
+
+  const minipage_back_icon = pageSpecificContent.querySelector('.back_icon')
+  if (!minipage_back_icon) throw new Error(`Mini page header missing for ${pageId}`)
+
+  let isClosing = false
+  async function miniPageCloseListener(isClick) {
+    if (isClosing) return true
+
+    const parentPage = getMiniPageParent(pageId)
+
+    /* INFO: Language/theme are nested inside Customization. Switch directly to
+             the parent page instead of popping the only active mini-page state. */
+    if (isMiniPage(parentPage)) {
+      if (isClick) {
+        await loadPage(parentPage)
+        return true
+      }
+
+      /* A system/browser Back already popped the overlay state. Restore that
+         state before returning to Customization so Back remains consistent. */
+      if (isPageTransitioning) return true
+      history.pushState(true, '', location.pathname)
+      await loadPage(parentPage)
+      return true
+    }
+
+    isClosing = true
+    if (isClick) history.back()
+
+    setNavbar(parentPage)
+    await runMiniPageLeave(pageSpecificContent)
+    unuseHTML(pageSpecificContent, pageId, false)
+    document.getElementById(`${pageId}_css`).media = 'not all'
+    detachMiniPageCloseListener(pageId)
+
+    return true
+  }
+
+  const onClick = () => { void miniPageCloseListener(true) }
+  const onPopState = () => {
+    /* INFO: Only the currently selected mini page may react to browser Back. */
+    if (whichCurrentPage() !== pageId) return
+    void miniPageCloseListener(false)
+  }
+
+  minipage_back_icon.addEventListener('click', onClick)
+  window.addEventListener('popstate', onPopState)
+  miniPageCloseBindings.set(pageId, { backIcon: minipage_back_icon, onClick, onPopState })
+}
+
 function isHTMLUnused(page, pageId) {
   /* INFO: Detect whether this page DOM is currently in the prefixed/inactive state. */
   if (!page || !page.childNodes) return false
@@ -281,6 +373,10 @@ async function loadPages() {
       const pageSpecificContent = document.createElement('div')
       pageSpecificContent.id = `${page}_content`
       pageSpecificContent.innerHTML = pageHTML
+      /* INFO: Create mini-page headers before the initial HTML is marked inactive.
+                This keeps the header/back button inside the page's normal lifecycle,
+                including nested navigation (Customization -> Theme/Language). */
+      if (isMiniPage(page)) ensureMiniPageHeader(pageSpecificContent)
       pageSpecificContent.style.display = 'none'
       if (isMiniPage(page)) pageSpecificContent.classList.add('page_loader_mini_layer')
 
@@ -394,20 +490,25 @@ export async function loadPage(pageId) {
   isPageTransitioning = true
 
   try {
-    setNavbar(pageId)
-
     const targetIsMiniPage = isMiniPage(pageId)
     const currentIsMiniPage = currentPage ? isMiniPage(currentPage) : false
+
+    /* INFO: A mini page being left must not keep a live Back handler. */
+    if (currentIsMiniPage && currentPage !== pageId) detachMiniPageCloseListener(currentPage)
+    setNavbar(pageId)
+
     /* INFO: Main-to-main transitions switch CSS at animation midpoint to avoid style conflicts. */
     const isMainToMain = currentPage && !currentIsMiniPage && !targetIsMiniPage
     const pageSpecificContent = document.getElementById(`${pageId}_content`)
     const targetNeedsRevert = isHTMLUnused(pageSpecificContent, pageId)
 
     if (targetNeedsRevert) revertHTMLUnuse(pageSpecificContent, pageId)
+    if (targetIsMiniPage) ensureMiniPageHeader(pageSpecificContent)
     if (!isMainToMain) document.getElementById(`${pageId}_css`).media = 'all'
 
     if (!currentPage) {
       await initializePage(pageId, pageSpecificContent, targetNeedsRevert)
+      if (targetIsMiniPage) attachMiniPageCloseListener(pageId, pageSpecificContent)
       pageSpecificContent.style.display = 'block'
 
       return true
@@ -417,47 +518,17 @@ export async function loadPage(pageId) {
     if (!currentIsMiniPage && targetIsMiniPage) {
       history.pushState(true, '', location.pathname)
 
-      if (!loadedPageView.includes(pageId)) {
-        const minipage_header = `
-          <div class="header" style="padding-left: 20px; display: flex; align-items: center; justify-content: initial;">
-            <div id="minipage_close" class="back_icon" style="width: 36px; height: 36px; margin-right: 6px;"></div>
-            <div id="minipage_title">Zygisk-Ultra: {{title}}</div>
-          </div>
-        `
-        pageSpecificContent.insertAdjacentHTML('afterbegin', minipage_header)
-      }
-
       await initializePage(pageId, pageSpecificContent, targetNeedsRevert)
-
-      const minipage_back_icon = pageSpecificContent.querySelector('.back_icon')
-
-      let isClosing = false
-      async function miniPageCloseListener(isClick) {
-        if (isClosing) return true
-        isClosing = true
-
-        if (isClick) history.back()
-
-        const parentPage = miniPageRegex.exec(pageId)[1]
-        setNavbar(parentPage)
-
-        await runMiniPageLeave(pageSpecificContent)
-        unuseHTML(pageSpecificContent, pageId, false)
-        document.getElementById(`${pageId}_css`).media = 'not all'
-
-        return true
-      }
-
-      minipage_back_icon.addEventListener('click', () => miniPageCloseListener(true), { once: true })
-      window.onceTrueEvent('popstate', () => miniPageCloseListener(false))
-
+      attachMiniPageCloseListener(pageId, pageSpecificContent)
       await runMiniPageEnter(pageSpecificContent)
 
       return true
     }
 
     if (currentIsMiniPage) {
-      history.back()
+      /* INFO: Mini-to-mini navigation reuses the overlay history entry. Popping it
+               here would lose the nested parent and send Back to the main screen. */
+      if (!targetIsMiniPage) history.back()
 
       /* INFO: Leaving a mini page always closes its overlay first, then opens the target page. */
       await runMiniPageLeave(currentPageContent)
@@ -474,6 +545,7 @@ export async function loadPage(pageId) {
       await initializePage(pageId, pageSpecificContent, targetNeedsRevert)
 
       if (targetIsMiniPage) {
+        attachMiniPageCloseListener(pageId, pageSpecificContent)
         await runMiniPageEnter(pageSpecificContent)
       } else {
         pageSpecificContent.style.display = 'block'

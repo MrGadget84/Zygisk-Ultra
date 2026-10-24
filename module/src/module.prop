@@ -5,3 +5,4 @@ versionCode=${versionCode}
 author=MrGadget84
 description=Zygisk-Ultra is an injection implementation in the Zygote processes for the White Kernel Project, built on the BreZygisk.
 managedFeatures=kernel_umount
+updateJson=https://raw.githubusercontent.com/MrGadget84/Zygisk-Ultra/main/update.json

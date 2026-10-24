@@ -1,6 +1,6 @@
 import { exec, toast } from '../../../../kernelsu.js'
 
-import { loadPage, setLanguage, reloadPage } from '../../../pageLoader.js'
+import { loadPage, setLanguage } from '../../../pageLoader.js'
 
 let availableLanguages = [ -1 /* INFO: To tell we haven't checked yet */ ]
 
@@ -86,8 +86,6 @@ export async function load() {
     if (getLangLocate.includes('ar_')) main_html.setAttribute('dir', 'rtl')
     else main_html.setAttribute('dir', 'ltr')
 
-    loadPage('settings')
-
-    reloadPage()
+    await loadPage('mini_settings_customization')
   }, false)
 }

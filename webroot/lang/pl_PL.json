@@ -66,7 +66,15 @@
       "WebUIDevelopers": "Autorzy WebUI",
       "orginalDevelopers": "Oryginalni autorzy modułu",
       "moduleLicense": "Licencja modułu",
-      "WebUILicense": "Licencja WebUI"
+      "WebUILicense": "Licencja WebUI",
+      "umount": {
+        "title": "Zygisk-Ultra Umount",
+        "description": "Włącz lub wyłącz Zygisk-Ultra Umount."
+      },
+      "customization": {
+        "title": "Personalizacja",
+        "description": "Dostosuj wygląd i działanie WebUI."
+      }
     },
     "mini_settings_language": {
       "title": "Zmień język"
@@ -78,6 +86,25 @@
         "light": "Jasny motyw",
         "amoled": "Motyw AMOLED",
         "system_based": "Motyw oparty na systemie"
+      }
+    },
+    "mini_settings_customization": {
+      "title": "Personalizacja",
+      "language": {
+        "title": "Zmień język",
+        "description": "Zmień język WebUI na wybrany."
+      },
+      "theme": {
+        "title": "Zmień motyw WebUI",
+        "description": "Wybierz motyw systemowy dla bieżącego WebUI"
+      },
+      "fullscreen": {
+        "title": "Wyłącz tryb pełnoekranowy w WebUI",
+        "description": "Ta opcja sprawi, że WebUI nie będzie wypełniać całego ekranu."
+      },
+      "font": {
+        "title": "Włącz czcionkę systemową",
+        "description": "Ta opcja włączy czcionkę systemową w bieżącym WebUI. UWAGA: Może być nie kompatybilna z FlipFont"
       }
     }
   },

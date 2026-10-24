@@ -13,7 +13,7 @@
       },
       "info": {
         "version": "Версия",
-        "root": "реализация рут",
+        "root": "Реализация рут",
         "zygote": {
           "injected": "Работает",
           "notInjected": "Не работает",
@@ -65,7 +65,15 @@
       "moduleDevelopers": "Разработчик(и) модуля",
       "WebUIDevelopers": "Разработчик(и) WebUI",
       "orginalDevelopers": "Разработчик(и) оригинального модуля",
-      "moduleLicense": "Лицензия модуля"
+      "moduleLicense": "Лицензия модуля",
+      "umount": {
+        "title": "Zygisk-Ultra Umount",
+        "description": "Включить или отключить Zygisk-Ultra Umount."
+      },
+      "customization": {
+        "title": "Кастомизация",
+        "description": "Настроить внешний вид и поведение WebUI."
+      }
     },
     "mini_settings_language": {
       "title": "Сменить язык"
@@ -77,6 +85,25 @@
         "light": "Светлая тема",
         "amoled": "Тема с глубоким черным",
         "system_based": "Системная тема"
+      }
+    },
+    "mini_settings_customization": {
+      "title": "Кастомизация",
+      "language": {
+        "title": "Сменить язык",
+        "description": "Сменить язык WebUI на выбранный."
+      },
+      "theme": {
+        "title": "Сменить тему WebUI",
+        "description": "Выберите вашу системную тему для WebUI."
+      },
+      "fullscreen": {
+        "title": "Выключить полноэкранный режим в WebUI",
+        "description": "С данной опцией, WebUI не будет занимать весь экран."
+      },
+      "font": {
+        "title": "Включить системный шрифт",
+        "description": "Эта опция включит системный шрифт в WebUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
       }
     }
   },

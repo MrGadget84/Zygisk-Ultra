@@ -65,7 +65,15 @@
       "moduleDevelopers": "模块开发者",
       "WebUIDevelopers": "WebUI 开发者",
       "orginalDevelopers": "原始模块开发者",
-      "moduleLicense": "模块许可证"
+      "moduleLicense": "模块许可证",
+      "umount": {
+        "title": "Zygisk-Ultra Umount",
+        "description": "启用或禁用 Zygisk-Ultra Umount。"
+      },
+      "customization": {
+        "title": "自定义",
+        "description": "自定义 WebUI 的外观和行为。"
+      }
     },
     "mini_settings_language": {
       "title": "语言"
@@ -77,6 +85,25 @@
         "light": "浅色主题",
         "amoled": "Amoled 主题",
         "system_based": "跟随系统"
+      }
+    },
+    "mini_settings_customization": {
+      "title": "自定义",
+      "language": {
+        "title": "语言",
+        "description": "将 WebUI 的语言切换为所选语言。"
+      },
+      "theme": {
+        "title": "更改 WebUI 主题",
+        "description": "为当前 WebUI 选择系统主题。"
+      },
+      "fullscreen": {
+        "title": "禁用 WebUI 全屏模式",
+        "description": "启用此选项后，WebUI 将不会占满整个屏幕。"
+      },
+      "font": {
+        "title": "启用系统字体",
+        "description": "此选项会在Web界面启用系统字体。可能与FlipFont不兼容。"
       }
     }
   },

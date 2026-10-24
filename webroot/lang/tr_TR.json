@@ -65,7 +65,15 @@
       "moduleDevelopers": "Modül Geliştirici(leri)",
       "WebUIDevelopers": "WebUI Geliştirici(leri)",
       "orginalDevelopers": "Orijinal Modül Geliştirici(leri)",
-      "moduleLicense": "Modül Lisansı"
+      "moduleLicense": "Modül Lisansı",
+      "umount": {
+        "title": "Zygisk-Ultra Umount",
+        "description": "Zygisk-Ultra Umount özelliğini etkinleştirin veya devre dışı bırakın."
+      },
+      "customization": {
+        "title": "Özelleştirme",
+        "description": "WebUI görünümünü ve davranışını özelleştirin."
+      }
     },
     "mini_settings_language": {
       "title": "Dili değiştir"
@@ -77,6 +85,25 @@
         "light": "Açık Tema",
         "amoled": "Amoled Tema",
         "system_based": "Sisteme Göre Tema"
+      }
+    },
+    "mini_settings_customization": {
+      "title": "Özelleştirme",
+      "language": {
+        "title": "Dil değiştir",
+        "description": "Web arayüzünün dilini seçilen dille değiştirin."
+      },
+      "theme": {
+        "title": "WebUI temasını değiştir",
+        "description": "Mevcut WebUI için sistem temanızı seçin"
+      },
+      "fullscreen": {
+        "title": "WebUI'de tam ekran modunu devre dışı bırak",
+        "description": "Bu seçenek, WebUI'nin ekranın tamamını kaplamamasını sağlayacaktır."
+      },
+      "font": {
+        "title": "Sistem yazı tipini etkinleştir",
+        "description": "Bu seçenek, mevcut WebUI sistem yazı tipini etkinleştirecektir.\nNOT: FlipFont ile uyumlu olmayabilir"
       }
     }
   },

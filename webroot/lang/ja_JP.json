@@ -65,7 +65,15 @@
       "moduleDevelopers": "モジュールの開発者",
       "WebUIDevelopers": "WebUI の開発者",
       "orginalDevelopers": "オリジナルのモジュールの開発者",
-      "moduleLicense": "モジュールのライセンス"
+      "moduleLicense": "モジュールのライセンス",
+      "umount": {
+        "title": "Zygisk-Ultra Umount",
+        "description": "Zygisk-Ultra Umount を有効または無効にします。"
+      },
+      "customization": {
+        "title": "カスタマイズ",
+        "description": "WebUI の外観と動作をカスタマイズします。"
+      }
     },
     "mini_settings_language": {
       "title": "言語の変更"
@@ -77,6 +85,25 @@
         "light": "ライトテーマ",
         "amoled": "Amoled テーマ",
         "system_based": "システムに基づくテーマ"
+      }
+    },
+    "mini_settings_customization": {
+      "title": "カスタマイズ",
+      "language": {
+        "title": "言語の変更",
+        "description": "WebUI の言語を選択した言語に変更します。"
+      },
+      "theme": {
+        "title": "WebUI のテーマを変更",
+        "description": "現在の WebUI で使用するテーマを選択します。"
+      },
+      "fullscreen": {
+        "title": "WebUI の全画面表示を無効化",
+        "description": "このオプションを有効にすると、WebUI は全画面表示されなくなります。"
+      },
+      "font": {
+        "title": "システムフォントを有効化",
+        "description": "現在の WebUI でシステムフォントの使用を有効化します。注意: FlipFont との互換性がない場合があります"
       }
     }
   },

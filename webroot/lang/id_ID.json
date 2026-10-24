@@ -65,7 +65,15 @@
       "moduleDevelopers": "Pengembang Modul",
       "WebUIDevelopers": "Pengembang WebUI",
       "orginalDevelopers": "Pengembang Modul Asli",
-      "moduleLicense": "Lisensi Modul"
+      "moduleLicense": "Lisensi Modul",
+      "umount": {
+        "title": "Zygisk-Ultra Umount",
+        "description": "Aktifkan atau nonaktifkan Zygisk-Ultra Umount."
+      },
+      "customization": {
+        "title": "Kustomisasi",
+        "description": "Sesuaikan tampilan dan perilaku WebUI."
+      }
     },
     "mini_settings_language": {
       "title": "Ubah Bahasa"
@@ -77,6 +85,25 @@
         "light": "Mode Terang",
         "amoled": "Mode Amoled",
         "system_based": "Mengikuti Tema Sistem"
+      }
+    },
+    "mini_settings_customization": {
+      "title": "Kustomisasi",
+      "language": {
+        "title": "Ubah Bahasa",
+        "description": "Ubah bahasa WebUI sesuai yang anda pilih."
+      },
+      "theme": {
+        "title": "Ubah Tema WebUI",
+        "description": "Pilih tema sistem untuk WebUI saat ini."
+      },
+      "fullscreen": {
+        "title": "Mematikan mode layar penuh di WebUI",
+        "description": "Pilihan ini dapat membuat WebUI tidak menggunakan layar penuh."
+      },
+      "font": {
+        "title": "Gunakan Font Sistem",
+        "description": "Opsi ini akan mengaktifkan font sistem pada WebUI saat ini. (Mungkin tidak kompatibel dengan FlipFont)"
       }
     }
   },

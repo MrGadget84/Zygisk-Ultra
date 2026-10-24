@@ -65,7 +65,15 @@
       "moduleDevelopers": "Những nhà phát triển mô-đun",
       "WebUIDevelopers": "Những nhà phát triển WebUI",
       "orginalDevelopers": "Những nhà phát triển mô-đun gốc",
-      "moduleLicense": "Giấy phép bản quyền mô-đun"
+      "moduleLicense": "Giấy phép bản quyền mô-đun",
+      "umount": {
+        "title": "Zygisk-Ultra Umount",
+        "description": "Bật hoặc tắt Zygisk-Ultra Umount."
+      },
+      "customization": {
+        "title": "Tùy chỉnh",
+        "description": "Tùy chỉnh giao diện và hành vi của WebUI."
+      }
     },
     "mini_settings_language": {
       "title": "Thay đổi ngôn ngữ"
@@ -77,6 +85,25 @@
         "light": "Giao diện sáng",
         "amoled": "Giao diện Amoled",
         "system_based": "Tự động theo hệ thống"
+      }
+    },
+    "mini_settings_customization": {
+      "title": "Tùy chỉnh",
+      "language": {
+        "title": "Thay đổi ngôn ngữ",
+        "description": "Thay đổi sang ngôn ngữ mới"
+      },
+      "theme": {
+        "title": "Giao diện WebUI",
+        "description": "Chọn giao diện cho WebUI hiện tại của bạn"
+      },
+      "fullscreen": {
+        "title": "Vô hiệu hóa chế độ toàn màn hình trên WebUI",
+        "description": "Tùy chọn này sẽ khiến cho WebUI không còn ở toàn màn hình."
+      },
+      "font": {
+        "title": "Sử dụng phông chữ hệ thống",
+        "description": "Tuỳ chọn này sẽ cho phép người dùng sử dụng phông chữ của hệ thống. LƯU Ý: Có thể sẽ không tương thích với FlipFont"
       }
     }
   },

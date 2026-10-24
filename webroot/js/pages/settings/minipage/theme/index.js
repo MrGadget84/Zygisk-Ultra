@@ -22,6 +22,6 @@ export async function load() {
     themeList[getThemeMode](true)
 
     setThemeData(getThemeMode)
-    loadPage('settings')
+    loadPage('mini_settings_customization')
   }, false)
 }
