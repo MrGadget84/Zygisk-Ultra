@@ -54,10 +54,6 @@
         "title": "WebUI'de tam ekran modunu devre dışı bırak",
         "description": "Bu seçenek, WebUI'nin ekranın tamamını kaplamamasını sağlayacaktır."
       },
-      "theme": {
-        "title": "WebUI temasını değiştir",
-        "description": "Mevcut WebUI için sistem temanızı seçin"
-      },
       "font": {
         "title": "Sistem yazı tipini etkinleştir",
         "description": "Bu seçenek, mevcut WebUI sistem yazı tipini etkinleştirecektir.\nNOT: FlipFont ile uyumlu olmayabilir"
@@ -65,7 +61,6 @@
       "moduleDevelopers": "Modül Geliştirici(leri)",
       "WebUIDevelopers": "WebUI Geliştirici(leri)",
       "orginalDevelopers": "Orijinal Modül Geliştirici(leri)",
-      "moduleLicense": "Modül Lisansı",
       "umount": {
         "title": "Zygisk-Ultra Umount",
         "description": "Zygisk-Ultra Umount özelliğini etkinleştirin veya devre dışı bırakın."
@@ -73,29 +68,20 @@
       "customization": {
         "title": "Özelleştirme",
         "description": "WebUI görünümünü ve davranışını özelleştirin."
+      },
+      "about": {
+        "title": "Modül hakkında",
+        "description": "Modül bilgilerini, sürümünü ve lisansını görüntüleyin."
       }
     },
     "mini_settings_language": {
       "title": "Dili değiştir"
-    },
-    "mini_settings_theme": {
-      "title": "WebUI temasını değiştir",
-      "theme": {
-        "dark": "Karanlık Tema",
-        "light": "Açık Tema",
-        "amoled": "Amoled Tema",
-        "system_based": "Sisteme Göre Tema"
-      }
     },
     "mini_settings_customization": {
       "title": "Özelleştirme",
       "language": {
         "title": "Dil değiştir",
         "description": "Web arayüzünün dilini seçilen dille değiştirin."
-      },
-      "theme": {
-        "title": "WebUI temasını değiştir",
-        "description": "Mevcut WebUI için sistem temanızı seçin"
       },
       "fullscreen": {
         "title": "WebUI'de tam ekran modunu devre dışı bırak",
@@ -105,6 +91,13 @@
         "title": "Sistem yazı tipini etkinleştir",
         "description": "Bu seçenek, mevcut WebUI sistem yazı tipini etkinleştirecektir.\nNOT: FlipFont ile uyumlu olmayabilir"
       }
+    },
+    "mini_settings_about": {
+      "title": "Modül hakkında",
+      "authorLabel": "Geliştirici",
+      "sourceCode": "Modül kaynak kodu",
+      "moduleLicense": "Modül lisansı",
+      "moduleLicenseValue": "AGPL 3"
     }
   },
   "globals": {

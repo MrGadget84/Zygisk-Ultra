@@ -54,10 +54,6 @@
         "title": "Wyłącz tryb pełnoekranowy w WebUI",
         "description": "Ta opcja sprawi, że WebUI nie będzie wypełniać całego ekranu."
       },
-      "theme": {
-        "title": "Zmień motyw WebUI",
-        "description": "Wybierz motyw systemowy dla bieżącego WebUI"
-      },
       "font": {
         "title": "Włącz czcionkę systemową",
         "description": "Ta opcja włączy czcionkę systemową w bieżącym WebUI. UWAGA: Może być nie kompatybilna z FlipFont"
@@ -65,7 +61,6 @@
       "moduleDevelopers": "Autorzy modułu",
       "WebUIDevelopers": "Autorzy WebUI",
       "orginalDevelopers": "Oryginalni autorzy modułu",
-      "moduleLicense": "Licencja modułu",
       "WebUILicense": "Licencja WebUI",
       "umount": {
         "title": "Zygisk-Ultra Umount",
@@ -74,29 +69,20 @@
       "customization": {
         "title": "Personalizacja",
         "description": "Dostosuj wygląd i działanie WebUI."
+      },
+      "about": {
+        "title": "O module",
+        "description": "Informacje o module, wersja i licencja."
       }
     },
     "mini_settings_language": {
       "title": "Zmień język"
-    },
-    "mini_settings_theme": {
-      "title": "Zmień motyw WebUI",
-      "theme": {
-        "dark": "Ciemny motyw",
-        "light": "Jasny motyw",
-        "amoled": "Motyw AMOLED",
-        "system_based": "Motyw oparty na systemie"
-      }
     },
     "mini_settings_customization": {
       "title": "Personalizacja",
       "language": {
         "title": "Zmień język",
         "description": "Zmień język WebUI na wybrany."
-      },
-      "theme": {
-        "title": "Zmień motyw WebUI",
-        "description": "Wybierz motyw systemowy dla bieżącego WebUI"
       },
       "fullscreen": {
         "title": "Wyłącz tryb pełnoekranowy w WebUI",
@@ -106,6 +92,13 @@
         "title": "Włącz czcionkę systemową",
         "description": "Ta opcja włączy czcionkę systemową w bieżącym WebUI. UWAGA: Może być nie kompatybilna z FlipFont"
       }
+    },
+    "mini_settings_about": {
+      "title": "O module",
+      "authorLabel": "Autor",
+      "sourceCode": "Kod źródłowy modułu",
+      "moduleLicense": "Licencja modułu",
+      "moduleLicenseValue": "AGPL 3"
     }
   },
   "globals": {

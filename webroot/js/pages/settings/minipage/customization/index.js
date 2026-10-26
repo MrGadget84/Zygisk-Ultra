@@ -1,5 +1,4 @@
 import { loadPage } from '../../../pageLoader.js'
-import utils from '../../../utils.js'
 import { fullScreen } from '../../../../kernelsu.js'
 
 const CONFIG_KEY = '/Zygisk-Ultra/webui_config'
@@ -55,31 +54,32 @@ export async function onceViewAfterUpdate() {
 export async function load() {
   const config = readConfig()
 
-  utils.addListener(document.getElementById('lang_page_toggle'), 'click', () => {
-    loadPage('mini_settings_language')
-  })
-
-  utils.addListener(document.getElementById('theme_page_toggle'), 'click', () => {
-    loadPage('mini_settings_theme')
-  })
+  const languageToggle = document.getElementById('lang_page_toggle')
+  if (languageToggle) {
+    languageToggle.onclick = () => { void loadPage('mini_settings_language') }
+  }
 
   const fullscreenSwitch = document.getElementById('rz_webui_fullscreen_switch')
-  fullscreenSwitch.checked = !!config.disableFullscreen
-  fullScreen(!config.disableFullscreen)
-
-  utils.addListener(fullscreenSwitch, 'change', () => {
-    config.disableFullscreen = fullscreenSwitch.checked
-    writeConfig(config)
+  if (fullscreenSwitch) {
+    fullscreenSwitch.checked = !!config.disableFullscreen
     fullScreen(!config.disableFullscreen)
-  })
+    fullscreenSwitch.onchange = () => {
+      const currentConfig = readConfig()
+      currentConfig.disableFullscreen = fullscreenSwitch.checked
+      writeConfig(currentConfig)
+      fullScreen(!currentConfig.disableFullscreen)
+    }
+  }
 
   const fontSwitch = document.getElementById('rz_webui_font_switch')
-  fontSwitch.checked = !!config.enableSystemFont
-  applySystemFont(config.enableSystemFont)
-
-  utils.addListener(fontSwitch, 'change', () => {
-    config.enableSystemFont = fontSwitch.checked
+  if (fontSwitch) {
+    fontSwitch.checked = !!config.enableSystemFont
     applySystemFont(config.enableSystemFont)
-    writeConfig(config)
-  })
+    fontSwitch.onchange = () => {
+      const currentConfig = readConfig()
+      currentConfig.enableSystemFont = fontSwitch.checked
+      applySystemFont(currentConfig.enableSystemFont)
+      writeConfig(currentConfig)
+    }
+  }
 }

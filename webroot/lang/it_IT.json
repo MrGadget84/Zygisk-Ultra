@@ -54,10 +54,6 @@
         "title": "Disabilita la modalità a schermo intero in WebUI",
         "description": "Questa opzione farà sì che l'interfaccia web non riempia tutta la schermata."
       },
-      "theme": {
-        "title": "Modifica tema WebUI",
-        "description": "Scegli il tema di sistema per l'interfaccia web attuale"
-      },
       "font": {
         "title": "Abilita font di sistema",
         "description": "Questa opzione abiliterà il font di sistema nell'interfaccia Web attuale. NOTA: Potrebbe non essere compatibile con FlipFont"
@@ -65,7 +61,6 @@
       "moduleDevelopers": "Sviluppatore(i) moduli",
       "WebUIDevelopers": "Sviluppatore(i) WebUI",
       "orginalDevelopers": "Sviluppatore(i) originale del modulo",
-      "moduleLicense": "Licenza del Modulo",
       "umount": {
         "title": "Zygisk-Ultra Umount",
         "description": "Abilita o disabilita Zygisk-Ultra Umount."
@@ -73,29 +68,20 @@
       "customization": {
         "title": "Personalizzazione",
         "description": "Personalizza l’aspetto e il comportamento della WebUI."
+      },
+      "about": {
+        "title": "Informazioni sul modulo",
+        "description": "Visualizza informazioni, versione e licenza del modulo."
       }
     },
     "mini_settings_language": {
       "title": "Cambia lingua"
-    },
-    "mini_settings_theme": {
-      "title": "Modifica tema WebUI",
-      "theme": {
-        "dark": "Tema scuro",
-        "light": "Tema chiaro",
-        "amoled": "Tema Amoled",
-        "system_based": "Tema basato sul sistema"
-      }
     },
     "mini_settings_customization": {
       "title": "Personalizzazione",
       "language": {
         "title": "Cambia il linguaggio della WebUI in quello selezionato",
         "description": "Cambia il linguaggio della WebUI in quello selezionato."
-      },
-      "theme": {
-        "title": "Modifica tema WebUI",
-        "description": "Scegli il tema di sistema per l'interfaccia web attuale"
       },
       "fullscreen": {
         "title": "Disabilita la modalità a schermo intero in WebUI",
@@ -105,6 +91,13 @@
         "title": "Abilita font di sistema",
         "description": "Questa opzione abiliterà il font di sistema nell'interfaccia Web attuale. NOTA: Potrebbe non essere compatibile con FlipFont"
       }
+    },
+    "mini_settings_about": {
+      "title": "Informazioni sul modulo",
+      "authorLabel": "Autore",
+      "sourceCode": "Codice sorgente del modulo",
+      "moduleLicense": "Licenza del modulo",
+      "moduleLicenseValue": "AGPL 3"
     }
   },
   "globals": {

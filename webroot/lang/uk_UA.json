@@ -54,10 +54,6 @@
         "title": "Вимкнути повноекранний режим веб-інтерфейсу",
         "description": "Ця опція не дозволить веб-інтерфейсу заповнювати весь екран."
       },
-      "theme": {
-        "title": "Змінити тему веб-інтерфейсу",
-        "description": "Виберіть тему системи для поточного веб-інтерфейсу"
-      },
       "font": {
         "title": "Увімкнути системний шрифт",
         "description": "Ця опція увімкне системний шрифт у поточному WebUI. Примітка: Може бути несумісною з FlipFont"
@@ -65,7 +61,6 @@
       "moduleDevelopers": "Розробник(и) модуля",
       "WebUIDevelopers": "Розробник(и) веб-інтерфейсу",
       "orginalDevelopers": "Розробник(и) оригінального модуля",
-      "moduleLicense": "Ліцензія модуля",
       "umount": {
         "title": "Zygisk-Ultra Umount",
         "description": "Увімкнути або вимкнути Zygisk-Ultra Umount."
@@ -73,29 +68,20 @@
       "customization": {
         "title": "Кастомізація",
         "description": "Налаштувати вигляд і поведінку WebUI."
+      },
+      "about": {
+        "title": "Про модуль",
+        "description": "Інформація про модуль, версію та ліцензію."
       }
     },
     "mini_settings_language": {
       "title": "Змінити мову"
-    },
-    "mini_settings_theme": {
-      "title": "Змінити тему веб-інтерфейсу",
-      "theme": {
-        "dark": "Темна тема",
-        "light": "Світла тема",
-        "amoled": "Amoled-тема",
-        "system_based": "Системна тема"
-      }
     },
     "mini_settings_customization": {
       "title": "Кастомізація",
       "language": {
         "title": "Змінити мову",
         "description": "Змінити мову веб-інтерфейсу на вибрану"
-      },
-      "theme": {
-        "title": "Змінити тему веб-інтерфейсу",
-        "description": "Виберіть тему системи для поточного веб-інтерфейсу"
       },
       "fullscreen": {
         "title": "Вимкнути повноекранний режим веб-інтерфейсу",
@@ -105,6 +91,13 @@
         "title": "Увімкнути системний шрифт",
         "description": "Ця опція увімкне системний шрифт у поточному WebUI. Примітка: Може бути несумісною з FlipFont"
       }
+    },
+    "mini_settings_about": {
+      "title": "Про модуль",
+      "authorLabel": "Автор",
+      "sourceCode": "Вихідний код модуля",
+      "moduleLicense": "Ліцензія модуля",
+      "moduleLicenseValue": "AGPL 3"
     }
   },
   "globals": {

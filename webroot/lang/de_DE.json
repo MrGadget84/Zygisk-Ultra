@@ -54,10 +54,6 @@
         "title": "WebUI-Vollbildmodus deaktivieren",
         "description": "Lässt die WebUI nicht den kompletten Bildschirm einnehmen"
       },
-      "theme": {
-        "title": " WebUI Design",
-        "description": "Wähle dein Design für die WebUI"
-      },
       "font": {
         "title": "System Schriftart benutzen",
         "description": "Benutze die System Schriftart, Achtung: möglicherweise inkompatibel mit FLIPFONT"
@@ -65,7 +61,6 @@
       "moduleDevelopers": "Modul Entwickler*innen",
       "WebUIDevelopers": "WebUI Entwickler*innen",
       "orginalDevelopers": "Original Modul Entwickler*innen",
-      "moduleLicense": "Modul Lizenz",
       "umount": {
         "title": "Zygisk-Ultra Umount",
         "description": "Zygisk-Ultra Umount aktivieren oder deaktivieren."
@@ -73,29 +68,20 @@
       "customization": {
         "title": "Anpassung",
         "description": "Darstellung und Verhalten der WebUI anpassen."
+      },
+      "about": {
+        "title": "Über das Modul",
+        "description": "Informationen, Version und Lizenz des Moduls anzeigen."
       }
     },
     "mini_settings_language": {
       "title": "Sprache auswählen"
-    },
-    "mini_settings_theme": {
-      "title": "WebUI Design auswählen",
-      "theme": {
-        "dark": "Dunkles Design",
-        "light": "Helles Design",
-        "amoled": "Amoled Design",
-        "system_based": "System Design"
-      }
     },
     "mini_settings_customization": {
       "title": "Anpassung",
       "language": {
         "title": "Sprache wechseln",
         "description": "Wechsel zur ausgewählten Sprache."
-      },
-      "theme": {
-        "title": " WebUI Design",
-        "description": "Wähle dein Design für die WebUI"
       },
       "fullscreen": {
         "title": "WebUI-Vollbildmodus deaktivieren",
@@ -105,6 +91,13 @@
         "title": "System Schriftart benutzen",
         "description": "Benutze die System Schriftart, Achtung: möglicherweise inkompatibel mit FLIPFONT"
       }
+    },
+    "mini_settings_about": {
+      "title": "Über das Modul",
+      "authorLabel": "Autor",
+      "sourceCode": "Quellcode des Moduls",
+      "moduleLicense": "Modullizenz",
+      "moduleLicenseValue": "AGPL 3"
     }
   },
   "globals": {

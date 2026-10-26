@@ -1,9 +1,11 @@
 import { setDarkNav } from './darkNavbar.js'
+import { clearMonetTheme } from './common.js'
 
 const rootCss = document.querySelector(':root')
 
 export function setAmoled(chooseSet) {
-  rootCss.style.setProperty('--background', '#000000')
+  clearMonetTheme(rootCss)
+  rootCss.style.setProperty('--zu-background', '#000000')
   rootCss.style.setProperty('--status-ok-bg', '#193a28')
   rootCss.style.setProperty('--status-ok-text', '#f2fff5')
   rootCss.style.setProperty('--status-error-bg', '#8d1d19')
@@ -19,7 +21,7 @@ export function setAmoled(chooseSet) {
   rootCss.style.setProperty('--nav-icon-inactive-filter', 'invert(0.42)')
   rootCss.style.setProperty('--desktop-navicon', '#242424ff')
   rootCss.style.setProperty('--icon-filter', 'invert(1)')
-  rootCss.style.setProperty('--button', 'var(--background)')
+  rootCss.style.setProperty('--button', 'var(--zu-background)')
 
   if (chooseSet) setData('amoled')
   setDarkNav()

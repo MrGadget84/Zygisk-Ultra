@@ -64,28 +64,25 @@ export async function onceViewAfterUpdate() {
 }
 
 export async function load() {
-  // _setNewThemeIcon()
+  const langList = document.getElementById('lang_list')
+  if (!langList || langList.dataset.languageClickBound === 'true') return
 
-  // const sp_lang_close = document.getElementById('sp_lang_close')
-
-  // sp_lang_close.addEventListener('click', async function langCloseButtonListener() {
-  //   sp_lang_close.removeEventListener('click', langCloseButtonListener)
-  //   loadPage('settings')
-  // })
-
-  document.addEventListener('click', async function langButtonListener(event) {
-    const getLangLocate = event.target.getAttribute('lang-data')
-    const main_html = document.getElementById('main_html')
+  // Keep the listener scoped to the language list. A document-level listener
+  // survived leaving this mini page and accumulated after each visit.
+  langList.dataset.languageClickBound = 'true'
+  langList.addEventListener('click', async (event) => {
+    const target = event.target instanceof Element ? event.target.closest('[lang-data]') : null
+    const getLangLocate = target?.getAttribute('lang-data')
     if (!getLangLocate || typeof getLangLocate !== 'string') return
 
-    document.removeEventListener('click', langButtonListener)
+    const mainHtml = document.getElementById('main_html')
 
-    /* INFO: Strip .json from the end of the filename */
-    setLanguage(getLangLocate.replace('.json', ''))
+    /* Strip .json from the end of the filename. */
+    await setLanguage(getLangLocate.replace(/\.json$/i, ''))
 
-    if (getLangLocate.includes('ar_')) main_html.setAttribute('dir', 'rtl')
-    else main_html.setAttribute('dir', 'ltr')
+    if (getLangLocate.includes('ar_')) mainHtml.setAttribute('dir', 'rtl')
+    else mainHtml.setAttribute('dir', 'ltr')
 
     await loadPage('mini_settings_customization')
-  }, false)
+  })
 }

@@ -32,7 +32,7 @@ LOADER_INPUTS = common.mk loader/Makefile \
 ZYGISKD_INPUTS = common.mk zygiskd/Makefile \
         $(shell find zygiskd/src -type f | sort)
 
-MODULE_INPUTS = scripts/sign.py \
+MODULE_INPUTS = Makefile common.mk scripts/sign.py \
         $(shell find module/src -type f | sort) \
         $(shell find webroot -type f | sort) \
         $(wildcard module/private_key module/public_key)
@@ -103,6 +103,8 @@ $(MODULE_DONE): $(LOADER_DONE) $(ZYGISKD_DONE) $(MODULE_INPUTS)
 
 	@echo "Copying webroot..."
 	@cp -r webroot $(MODULE_OUT)/webroot
+	@echo "Writing module info metadata..."
+	@MODULE_DISPLAY_NAME='$(MODULE_NAME)' MODULE_VERSION='$(VER_NAME)' MODULE_VERSION_CODE='$(VER_CODE)' python3 -c 'import json, os; from pathlib import Path; p=Path("$(MODULE_OUT)/webroot/module-info.json"); d=json.loads(p.read_text()); d["name"]=os.environ["MODULE_DISPLAY_NAME"]; d["version"]=os.environ["MODULE_VERSION"]; d["versionCode"]=int(os.environ["MODULE_VERSION_CODE"]); p.write_text(json.dumps(d, indent=2, ensure_ascii=False)+"\n")'
 
 	@if [ -f module/private_key ]; then                                             \
 		echo "Signing module...";                                                   \

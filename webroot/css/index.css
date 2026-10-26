@@ -4,7 +4,7 @@
 	--top-inset: var(--window-inset-top, 0px);
 	--bottom-inset: var(--window-inset-bottom, 0px);
 
-  --background: #141414;
+  --zu-background: #141414;
   --font: #fff;
   --desc: #c9c9c9;
   --bright: #8d1d19;
@@ -18,7 +18,7 @@
   --icon: #494949;
   --icon-bc: #292929;
   --small-card: var(--icon-bc);
-  --button: var(--background);
+  --button: var(--zu-background);
   --button-enabled: #535353;
   --desktop-navbar: #080808;
   --desktop-navicon: #3a3a3a;
@@ -32,7 +32,7 @@
 }
 
 * {
-  background-color: var(--background);
+  background-color: var(--zu-background);
   color: var(--font);
   font-family: var(--font-family);
   user-select: none;
@@ -198,7 +198,7 @@ body {
   min-height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  background: var(--background);
+  background: var(--zu-background);
   transform: translateX(var(--page_loader_main_from, 0%));
   will-change: transform;
   z-index: 1;
@@ -213,7 +213,7 @@ body {
   inset: 0;
   pointer-events: auto;
   z-index: 11;
-  background: var(--background);
+  background: var(--zu-background);
   box-shadow: -10px 0 30px rgb(0 0 0 / 20%);
   overflow-y: auto;
 }
@@ -271,3 +271,36 @@ body {
   }
 }
 
+
+
+/* Monet / Material You navbar: use SVGs as masks to tint icons with dynamic colors. */
+:root.monet-theme #navbar #ni_home,
+:root.monet-theme #navbar #ni_modules,
+:root.monet-theme #navbar #ni_actions,
+:root.monet-theme #navbar #ni_settings {
+  background-image: none !important;
+  background-color: var(--onSurfaceVariant, var(--font)) !important;
+  filter: none !important;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+:root.monet-theme #navbar #ni_home { -webkit-mask-image: url(../assets/home/outlined.svg); mask-image: url(../assets/home/outlined.svg); }
+:root.monet-theme #navbar #ni_modules { -webkit-mask-image: url(../assets/modules/outlined.svg); mask-image: url(../assets/modules/outlined.svg); }
+:root.monet-theme #navbar #ni_actions { -webkit-mask-image: url(../assets/actions/outlined.svg); mask-image: url(../assets/actions/outlined.svg); }
+:root.monet-theme #navbar #ni_settings { -webkit-mask-image: url(../assets/settings/outlined.svg); mask-image: url(../assets/settings/outlined.svg); }
+
+:root.monet-theme #navbar label.radio.nav-active #ni_home,
+:root.monet-theme #navbar label.radio.nav-active #ni_modules,
+:root.monet-theme #navbar label.radio.nav-active #ni_actions,
+:root.monet-theme #navbar label.radio.nav-active #ni_settings {
+  background-color: var(--primary, var(--font)) !important;
+}
+:root.monet-theme #navbar label.radio.nav-active #ni_home { -webkit-mask-image: url(../assets/home/filled.svg); mask-image: url(../assets/home/filled.svg); }
+:root.monet-theme #navbar label.radio.nav-active #ni_modules { -webkit-mask-image: url(../assets/modules/filled.svg); mask-image: url(../assets/modules/filled.svg); }
+:root.monet-theme #navbar label.radio.nav-active #ni_actions { -webkit-mask-image: url(../assets/actions/filled.svg); mask-image: url(../assets/actions/filled.svg); }
+:root.monet-theme #navbar label.radio.nav-active #ni_settings { -webkit-mask-image: url(../assets/settings/filled.svg); mask-image: url(../assets/settings/filled.svg); }

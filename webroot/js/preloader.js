@@ -1,7 +1,5 @@
 import { exec, fullScreen } from './kernelsu.js'
-import { setDark } from './themes/dark.js'
-import { setThemeData, themeList } from './themes/main.js'
-import { setLight } from './themes/light.js'
+import { applyCurrentTheme } from './themes/main.js'
 import { loadPage } from './pages/pageLoader.js'
 
 /* INFO: Provide short tactile feedback for user-facing controls. */
@@ -19,7 +17,6 @@ const HAPTIC_INTERACTIVE_SELECTOR = [
   '.back_icon',
   '.card_animation',
   '.action_card',
-  '[theme-data]',
   '[lang-data]',
   '[credit-link]',
   '[id$="_page_toggle"]',
@@ -58,10 +55,8 @@ document.addEventListener('pointerdown', (event) => {
   triggerHapticFeedback()
 }, { capture: true, passive: true })
 
-/* INFO: This sets the default theme to system if not set */
-let sys_theme = localStorage.getItem('/Zygisk-Ultra/theme')
-if (!sys_theme) sys_theme = setThemeData('system')
-themeList[sys_theme](true)
+/* Monet is always enabled; use the system appearance as a fallback palette. */
+applyCurrentTheme()
 
 const ConfigState = JSON.parse(localStorage.getItem('/Zygisk-Ultra/webui_config') || '{}')
 
@@ -80,7 +75,8 @@ if (ConfigState.enableSystemFont) {
 
 /* INFO: This code are meant to load the link with any card have credit-link attribute inside it */
 document.addEventListener('click', async (event) => {
-  const getLink = event.target.getAttribute('credit-link')
+  const target = event.target instanceof Element ? event.target.closest('[credit-link]') : null
+  const getLink = target?.getAttribute('credit-link')
   if (!getLink || typeof getLink !== 'string') return;
 
   const ptrace64Cmd = await exec(`am start -a android.intent.action.VIEW -d https://${getLink}`).catch(() => {
@@ -90,10 +86,6 @@ document.addEventListener('click', async (event) => {
   if (ptrace64Cmd.errno !== 0) return window.open(`https://${getLink}`, "_blank", 'toolbar=0,location=0,menubar=0')
 }, false)
 
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-  if (sys_theme !== 'system') return
-
-  const newColorScheme = event.matches ? 'dark' : 'light'
-  if (newColorScheme === 'dark') setDark()
-  else if (newColorScheme === 'light') setLight()
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+  applyCurrentTheme()
 })

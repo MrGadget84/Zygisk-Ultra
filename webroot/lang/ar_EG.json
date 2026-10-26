@@ -54,10 +54,6 @@
         "title": "تعطيل وضع ملء الشاشة",
         "description": "هذا الخيار يمنع WebUI من ملء الشاشة بالكامل."
       },
-      "theme": {
-        "title": "تغيير مظهر WebUI",
-        "description": "اختر مظهر النظام لواجهة WebUI الحالية."
-      },
       "font": {
         "title": "تفعيل خط النظام",
         "description": "يعرض هذا الخيار النص بخط النظام بدلاً من خط WebUI. قد لا يتوافق مع FlipFont."
@@ -65,7 +61,6 @@
       "moduleDevelopers": "مطورو الإضافة",
       "WebUIDevelopers": "مطورو WebUI",
       "orginalDevelopers": "المطورون الأصليون للإضافة",
-      "moduleLicense": "ترخيص الإضافة",
       "umount": {
         "title": "Zygisk-Ultra Umount",
         "description": "تمكين أو تعطيل Zygisk-Ultra Umount."
@@ -73,29 +68,20 @@
       "customization": {
         "title": "التخصيص",
         "description": "تخصيص مظهر وسلوك واجهة الويب."
+      },
+      "about": {
+        "title": "حول الوحدة",
+        "description": "عرض معلومات الوحدة وإصدارها وترخيصها."
       }
     },
     "mini_settings_language": {
       "title": "تغيير اللغة"
-    },
-    "mini_settings_theme": {
-      "title": "تغيير مظهر WebUI",
-      "theme": {
-        "dark": "الوضع الداكن",
-        "light": "الوضع الفاتح",
-        "amoled": "وضع الأموليد",
-        "system_based": "حسب النظام"
-      }
     },
     "mini_settings_customization": {
       "title": "التخصيص",
       "language": {
         "title": "تغيير اللغة",
         "description": "تغيير لغة WebUI إلى اللغة المختارة."
-      },
-      "theme": {
-        "title": "تغيير مظهر WebUI",
-        "description": "اختر مظهر النظام لواجهة WebUI الحالية."
       },
       "fullscreen": {
         "title": "تعطيل وضع ملء الشاشة",
@@ -105,6 +91,13 @@
         "title": "تفعيل خط النظام",
         "description": "يعرض هذا الخيار النص بخط النظام بدلاً من خط WebUI. قد لا يتوافق مع FlipFont."
       }
+    },
+    "mini_settings_about": {
+      "title": "حول الوحدة",
+      "authorLabel": "المؤلف",
+      "sourceCode": "الشيفرة المصدرية للوحدة",
+      "moduleLicense": "ترخيص الوحدة",
+      "moduleLicenseValue": "AGPL 3"
     }
   },
   "globals": {

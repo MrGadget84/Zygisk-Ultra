@@ -9,11 +9,10 @@ import utils from './utils.js'
 const moduleName = 'TreatWheel'
 const head = document.getElementsByTagName('head')[0]
 const miniPageRegex = /mini_(.*)_(.*)/
-/* INFO: UI parent pages can differ from their storage path. Language and theme
-         now open from Customization, even though their files live under settings. */
+/* UI parent paths can differ from the storage path. Language is nested in Customization. */
 const miniPageParentOverrides = {
   mini_settings_language: 'mini_settings_customization',
-  mini_settings_theme: 'mini_settings_customization'
+  mini_settings_about: 'settings'
 }
 const miniPageCloseBindings = new Map()
 
@@ -26,8 +25,8 @@ export const allMainPages = [
 
 export const allMiniPages = [
   'mini_settings_language',
-  'mini_settings_theme',
-  'mini_settings_customization'
+  'mini_settings_customization',
+  'mini_settings_about'
 ]
 
 export const allPages = [ ...allMainPages, ...allMiniPages ]
@@ -35,6 +34,8 @@ export const allPages = [ ...allMainPages, ...allMiniPages ]
 const loadedPageView = []
 /* INFO: Prevent overlapping page transitions when users tap navigation rapidly. */
 let isPageTransitioning = false
+/* Ignore the root fallback when a mini-page intentionally consumes history.back(). */
+let suppressNextGlobalPopstate = false
 /* INFO: Direct assignment would link both arrays. We do not want that. */
 const sufferedUpdate = [ ...allPages ]
 const pageReplacements = allPages.reduce((obj, pageId) => {
@@ -205,6 +206,23 @@ function getMiniPageParent(pageId) {
   return miniPageIdData ? miniPageIdData[1] : null
 }
 
+function getMainPageAncestor(pageId) {
+  let parentPage = getMiniPageParent(pageId)
+  const visited = new Set([pageId])
+
+  while (parentPage && isMiniPage(parentPage) && !visited.has(parentPage)) {
+    visited.add(parentPage)
+    parentPage = getMiniPageParent(parentPage)
+  }
+
+  return parentPage
+}
+
+function goBackWithoutGlobalFallback() {
+  suppressNextGlobalPopstate = true
+  history.back()
+}
+
 function detachMiniPageCloseListener(pageId) {
   const binding = miniPageCloseBindings.get(pageId)
   if (!binding) return
@@ -227,16 +245,19 @@ function attachMiniPageCloseListener(pageId, pageSpecificContent) {
 
     const parentPage = getMiniPageParent(pageId)
 
-    /* INFO: Language/theme are nested inside Customization. Switch directly to
-             the parent page instead of popping the only active mini-page state. */
-    if (isMiniPage(parentPage)) {
-      if (isClick) {
-        await loadPage(parentPage)
-        return true
-      }
+    /* Route explicit close-button taps through the same transition manager as
+       every other navigation. This avoids leaving stale navbar/transition state
+       after returning from a nested page such as Language -> Customization. */
+    if (isClick) {
+      if (!parentPage) return true
+      await loadPage(parentPage)
+      return true
+    }
 
-      /* A system/browser Back already popped the overlay state. Restore that
-         state before returning to Customization so Back remains consistent. */
+    /* Browser/system Back already popped the overlay history entry. If the
+       parent is another mini page, restore the overlay state and return to it
+       without popping the Settings entry underneath. */
+    if (isMiniPage(parentPage)) {
       if (isPageTransitioning) return true
       history.pushState(true, '', location.pathname)
       await loadPage(parentPage)
@@ -244,8 +265,6 @@ function attachMiniPageCloseListener(pageId, pageSpecificContent) {
     }
 
     isClosing = true
-    if (isClick) history.back()
-
     setNavbar(parentPage)
     await runMiniPageLeave(pageSpecificContent)
     unuseHTML(pageSpecificContent, pageId, false)
@@ -257,8 +276,9 @@ function attachMiniPageCloseListener(pageId, pageSpecificContent) {
 
   const onClick = () => { void miniPageCloseListener(true) }
   const onPopState = () => {
-    /* INFO: Only the currently selected mini page may react to browser Back. */
-    if (whichCurrentPage() !== pageId) return
+    /* INFO: Only the selected mini page may react, and not while loadPage owns
+       the transition (for example, tapping a bottom-navigation destination). */
+    if (whichCurrentPage() !== pageId || isPageTransitioning) return
     void miniPageCloseListener(false)
   }
 
@@ -526,20 +546,43 @@ export async function loadPage(pageId) {
     }
 
     if (currentIsMiniPage) {
-      /* INFO: Mini-to-mini navigation reuses the overlay history entry. Popping it
-               here would lose the nested parent and send Back to the main screen. */
-      if (!targetIsMiniPage) history.back()
+      /* Mini-to-mini navigation reuses the current overlay history entry. */
+      if (!targetIsMiniPage) goBackWithoutGlobalFallback()
 
-      /* INFO: Leaving a mini page always closes its overlay first, then opens the target page. */
       await runMiniPageLeave(currentPageContent)
       unuseHTML(currentPageContent, currentPage)
       document.getElementById(`${currentPage}_css`).media = 'not all'
+      detachMiniPageCloseListener(currentPage)
 
-      const parentPage = miniPageRegex.exec(currentPage)[1]
-      if (parentPage !== pageId && !targetIsMiniPage) {
-        document.getElementById(`${parentPage}_content`).style.display = 'none'
-        unuseHTML(document.getElementById(`${parentPage}_content`), parentPage, false)
-        document.getElementById(`${parentPage}_css`).media = 'not all'
+      if (!targetIsMiniPage) {
+        // A nested mini page can sit above another mini page (Language above
+        // Customization). Hide every intermediate layer before returning to a
+        // main page, but never hide the actual target page.
+        let ancestor = getMiniPageParent(currentPage)
+        const visitedAncestors = new Set([currentPage])
+        while (ancestor && isMiniPage(ancestor) && ancestor !== pageId && !visitedAncestors.has(ancestor)) {
+          visitedAncestors.add(ancestor)
+          const ancestorContent = document.getElementById(`${ancestor}_content`)
+          if (ancestorContent) {
+            ancestorContent.style.display = 'none'
+            unuseHTML(ancestorContent, ancestor, false)
+          }
+          const ancestorCss = document.getElementById(`${ancestor}_css`)
+          if (ancestorCss) ancestorCss.media = 'not all'
+          detachMiniPageCloseListener(ancestor)
+          ancestor = getMiniPageParent(ancestor)
+        }
+
+        const mainAncestor = getMainPageAncestor(currentPage)
+        if (mainAncestor && mainAncestor !== pageId && allMainPages.includes(mainAncestor)) {
+          const mainAncestorContent = document.getElementById(`${mainAncestor}_content`)
+          if (mainAncestorContent) {
+            mainAncestorContent.style.display = 'none'
+            unuseHTML(mainAncestorContent, mainAncestor, false)
+          }
+          const mainAncestorCss = document.getElementById(`${mainAncestor}_css`)
+          if (mainAncestorCss) mainAncestorCss.media = 'not all'
+        }
       }
 
       await initializePage(pageId, pageSpecificContent, targetNeedsRevert)
@@ -575,7 +618,7 @@ export async function loadPage(pageId) {
   } finally {
     isPageTransitioning = false
 
-    if (pageId === 'home' && currentPage !== 'home')
+    if (pageId === 'home' && currentPage !== 'home' && history.state !== null)
       history.back()
     else if (pageId !== 'home' && currentPage === 'home')
       history.pushState(true, '', location.pathname)
@@ -694,10 +737,32 @@ export function getStrings(pageId, forceDefault = false) {
     })
 }
 
-export function setLanguage(langId) {
-  localStorage.setItem(`/${moduleName}/language`, langId)
+export async function setLanguage(langId) {
+  const normalizedLangId = String(langId || 'en_US').replace(/\.json$/i, '')
+  localStorage.setItem(`/${moduleName}/language`, normalizedLangId)
 
+  /*
+   * Existing page content is refreshed lazily by initializePage() when each
+   * page is next opened. The bottom navigation, however, stays mounted all the
+   * time, so update its labels immediately instead of waiting for the WebUI to
+   * be reopened. Invalidate the page cache first so the next page transition
+   * uses the newly selected translations as well.
+   */
   sufferedUpdate.length = 0
+
+  try {
+    const response = await fetch(`lang/${normalizedLangId}.json`, { cache: 'no-store' })
+    if (!response.ok) throw new Error(`Language file returned HTTP ${response.status}`)
+    const data = await response.json()
+
+    allMainPages.forEach((page) => {
+      const titleElement = document.getElementById(`nav_${page}_title`)
+      const title = data?.pages?.[page]?.title
+      if (titleElement && typeof title === 'string') titleElement.textContent = title
+    })
+  } catch (error) {
+    console.warn('Could not immediately refresh navigation labels for the selected language.', error)
+  }
 }
 
 (async () => {
@@ -725,9 +790,19 @@ window.addEventListener('unhandledrejection', function (event) {
 })
 
 window.addEventListener('popstate', async () => {
-  if (history.state !== null) return;
+  if (suppressNextGlobalPopstate) {
+    suppressNextGlobalPopstate = false
+    return
+  }
 
-  await loadPage('home')
+  if (history.state !== null) return
+
+  // Mini pages own their own Back action. Falling through to Home here races
+  // with their close handler and can leave Settings' child pages unusable.
+  if (isMiniPage(whichCurrentPage())) return
+
+  const currentPage = whichCurrentPage()
+  if (currentPage && currentPage !== 'home') await loadPage('home')
 })
 
 const setIntervalId = setInterval(() => {

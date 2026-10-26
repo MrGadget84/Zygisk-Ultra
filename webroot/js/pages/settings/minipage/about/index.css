@@ -1,0 +1,166 @@
+.about-panel {
+  padding-bottom: calc(var(--bottom-inset, 0px) + 24px);
+}
+
+.about-title-card {
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.about-title-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  background: transparent;
+}
+
+.about-module-name,
+.about-version {
+  font-size: 1.4em;
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  background: transparent;
+}
+
+.about-base {
+  margin-top: 7px;
+  color: var(--desc);
+  font-size: 0.84em;
+  background: transparent;
+}
+
+.about-author-card {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 56px;
+  align-items: center;
+  gap: 8px;
+  min-height: 78px;
+  padding: 10px 14px;
+}
+
+.about-avatar-link {
+  position: relative;
+  display: block;
+  grid-column: 1;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--dim-brigther);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.about-avatar,
+.about-avatar-fallback {
+  position: absolute;
+  inset: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.about-avatar {
+  object-fit: cover;
+  background: var(--dim-brigther);
+}
+
+.about-avatar-fallback {
+  display: grid;
+  place-items: center;
+  background: var(--button-enabled, var(--dim-brigther));
+  color: var(--font);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.about-author {
+  grid-column: 2;
+  justify-self: stretch;
+  text-align: center;
+  font-size: 1em;
+  overflow-wrap: anywhere;
+  background: transparent !important;
+  box-shadow: none;
+}
+
+/* Keep the author text itself transparent so only the rounded pill has a background. */
+.about-author span,
+.about-author strong {
+  background: transparent !important;
+  box-shadow: none;
+}
+
+.about-author strong {
+  color: var(--font);
+}
+
+.about-author-spacer {
+  grid-column: 3;
+  width: 56px;
+  height: 1px;
+  background: transparent;
+}
+
+.about-link-card {
+  min-height: 54px;
+  margin-top: 15px;
+  padding: 12px 16px;
+}
+
+.about-link-copy {
+  min-width: 0;
+  background: transparent;
+}
+
+.about-link-text {
+  font-size: 1em;
+  overflow-wrap: anywhere;
+}
+
+.about-license-value {
+  font-size: 0.82em;
+  margin-top: 3px;
+}
+
+.about-link-icon {
+  flex: 0 0 auto;
+  margin-left: 12px;
+  font-size: 1.2em;
+  color: var(--desc);
+}
+
+@media (max-width: 360px) {
+  .about-title-card {
+    padding: 18px 12px;
+  }
+
+  .about-module-name,
+  .about-version {
+    font-size: 1.2em;
+  }
+
+  .about-author-card {
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
+    gap: 5px;
+    padding: 9px 10px;
+  }
+
+  .about-avatar-link,
+  .about-avatar,
+  .about-avatar-fallback {
+    width: 48px;
+    height: 48px;
+  }
+
+  .about-author-spacer {
+    width: 48px;
+  }
+
+  .about-author {
+    font-size: 0.92em;
+  }
+}

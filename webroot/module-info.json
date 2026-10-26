@@ -1,0 +1,13 @@
+{
+  "name": "Zygisk-Ultra",
+  "version": "development",
+  "versionCode": 0,
+  "author": "MrGadget84",
+  "base": "BreZygisk",
+  "description": "Zygisk-Ultra is an injection implementation in the Zygote processes for the White Kernel Project, built on the BreZygisk.",
+  "repository": "https://github.com/MrGadget84/Zygisk-Ultra",
+  "authorUrl": "https://github.com/MrGadget84",
+  "avatarUrl": "https://avatars.githubusercontent.com/u/270354970?s=128&v=4",
+  "license": "AGPL 3",
+  "licenseUrl": "https://github.com/MrGadget84/Zygisk-Ultra/blob/main/webroot/LICENSE"
+}

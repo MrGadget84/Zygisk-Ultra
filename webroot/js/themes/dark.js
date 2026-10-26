@@ -1,9 +1,11 @@
 import { setDarkNav } from './darkNavbar.js'
+import { clearMonetTheme } from './common.js'
 
 const rootCss = document.querySelector(':root')
 
 export function setDark(chooseSet) {
-  rootCss.style.setProperty('--background', '#141414')
+  clearMonetTheme(rootCss)
+  rootCss.style.setProperty('--zu-background', '#141414')
   rootCss.style.setProperty('--status-ok-bg', '#193a28')
   rootCss.style.setProperty('--status-ok-text', '#f2fff5')
   rootCss.style.setProperty('--status-error-bg', '#8d1d19')
@@ -20,7 +22,7 @@ export function setDark(chooseSet) {
   rootCss.style.setProperty('--button-enabled', '#535353')
   rootCss.style.setProperty('--icon-filter', 'invert(1)')
   rootCss.style.setProperty('--desktop-navicon', '#3a3a3a')
-  rootCss.style.setProperty('--button', 'var(--background)')
+  rootCss.style.setProperty('--button', 'var(--zu-background)')
 
   if (chooseSet) setData('dark')
   setDarkNav()

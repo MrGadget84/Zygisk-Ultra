@@ -54,10 +54,6 @@
         "title": "Выключить полноэкранный режим в WebUI",
         "description": "С данной опцией, WebUI не будет занимать весь экран."
       },
-      "theme": {
-        "title": "Сменить тему WebUI",
-        "description": "Выберите вашу системную тему для WebUI."
-      },
       "font": {
         "title": "Включить системный шрифт",
         "description": "Эта опция включит системный шрифт в WebUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
@@ -65,7 +61,6 @@
       "moduleDevelopers": "Разработчик(и) модуля",
       "WebUIDevelopers": "Разработчик(и) WebUI",
       "orginalDevelopers": "Разработчик(и) оригинального модуля",
-      "moduleLicense": "Лицензия модуля",
       "umount": {
         "title": "Zygisk-Ultra Umount",
         "description": "Включить или отключить Zygisk-Ultra Umount."
@@ -73,29 +68,20 @@
       "customization": {
         "title": "Кастомизация",
         "description": "Настроить внешний вид и поведение WebUI."
+      },
+      "about": {
+        "title": "О модуле",
+        "description": "Информация о модуле, версия и лицензия."
       }
     },
     "mini_settings_language": {
       "title": "Сменить язык"
-    },
-    "mini_settings_theme": {
-      "title": "Сменить тему WebUI",
-      "theme": {
-        "dark": "Тёмная тема",
-        "light": "Светлая тема",
-        "amoled": "Тема с глубоким черным",
-        "system_based": "Системная тема"
-      }
     },
     "mini_settings_customization": {
       "title": "Кастомизация",
       "language": {
         "title": "Сменить язык",
         "description": "Сменить язык WebUI на выбранный."
-      },
-      "theme": {
-        "title": "Сменить тему WebUI",
-        "description": "Выберите вашу системную тему для WebUI."
       },
       "fullscreen": {
         "title": "Выключить полноэкранный режим в WebUI",
@@ -105,6 +91,13 @@
         "title": "Включить системный шрифт",
         "description": "Эта опция включит системный шрифт в WebUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
       }
+    },
+    "mini_settings_about": {
+      "title": "О модуле",
+      "authorLabel": "Автор",
+      "sourceCode": "Исходный код модуля",
+      "moduleLicense": "Лицензия модуля",
+      "moduleLicenseValue": "AGPL 3"
     }
   },
   "globals": {

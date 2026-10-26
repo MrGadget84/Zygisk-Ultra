@@ -54,10 +54,6 @@
         "title": "WebUI 전체 화면 모드 비활성화",
         "description": "WebUI가 화면 전체를 채우지 않습니다."
       },
-      "theme": {
-        "title": "WebUI 테마 변경",
-        "description": "현재 WebUI의 시스템 테마를 선택합니다."
-      },
       "font": {
         "title": "시스템 글꼴 활성화",
         "description": "현재 WebUI에서 시스템 글꼴을 사용합니다. 참고: FlipFont와 호환되지 않을 수 있습니다."
@@ -65,7 +61,6 @@
       "moduleDevelopers": "모듈 개발자",
       "WebUIDevelopers": "WebUI 개발자",
       "orginalDevelopers": "원작 모듈 개발자",
-      "moduleLicense": "모듈 라이선스",
       "umount": {
         "title": "Zygisk-Ultra Umount",
         "description": "Zygisk-Ultra Umount를 활성화하거나 비활성화합니다."
@@ -73,29 +68,20 @@
       "customization": {
         "title": "사용자 지정",
         "description": "WebUI의 모양과 동작을 사용자 지정합니다."
+      },
+      "about": {
+        "title": "모듈 정보",
+        "description": "모듈 정보, 버전 및 라이선스를 확인합니다."
       }
     },
     "mini_settings_language": {
       "title": "언어 변경"
-    },
-    "mini_settings_theme": {
-      "title": "WebUI 테마 변경",
-      "theme": {
-        "dark": "다크 테마",
-        "light": "라이트 테마",
-        "amoled": "AMOLED 테마",
-        "system_based": "시스템 기반 테마"
-      }
     },
     "mini_settings_customization": {
       "title": "사용자 지정",
       "language": {
         "title": "언어 변경",
         "description": "WebUI의 언어를 변경합니다."
-      },
-      "theme": {
-        "title": "WebUI 테마 변경",
-        "description": "현재 WebUI의 시스템 테마를 선택합니다."
       },
       "fullscreen": {
         "title": "WebUI 전체 화면 모드 비활성화",
@@ -105,6 +91,13 @@
         "title": "시스템 글꼴 활성화",
         "description": "현재 WebUI에서 시스템 글꼴을 사용합니다. 참고: FlipFont와 호환되지 않을 수 있습니다."
       }
+    },
+    "mini_settings_about": {
+      "title": "모듈 정보",
+      "authorLabel": "작성자",
+      "sourceCode": "모듈 소스 코드",
+      "moduleLicense": "모듈 라이선스",
+      "moduleLicenseValue": "AGPL 3"
     }
   },
   "globals": {

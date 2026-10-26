@@ -54,10 +54,6 @@
         "title": "Desactivar el modo de pantalla completa en el WebUI",
         "description": "Esta opción evitará que el WebUI ocupe toda la pantalla."
       },
-      "theme": {
-        "title": "Cambiar el tema del WebUI",
-        "description": "Elige el tema del sistema para el WebUI actual."
-      },
       "font": {
         "title": "Activar fuente del sistema",
         "description": "Esta opción habilitará la fuente del sistema en el WebUI actual. NOTA: Puede no ser compatible con FlipFont"
@@ -65,7 +61,6 @@
       "moduleDevelopers": "Desarrollador(es) del módulo",
       "WebUIDevelopers": "Desarrollador(es) del WebUI",
       "orginalDevelopers": "Desarrollador(es) del Modulo Original",
-      "moduleLicense": "Licencia del Modulo",
       "umount": {
         "title": "Zygisk-Ultra Umount",
         "description": "Activar o desactivar Zygisk-Ultra Umount."
@@ -73,29 +68,20 @@
       "customization": {
         "title": "Personalización",
         "description": "Personaliza la apariencia y el comportamiento de WebUI."
+      },
+      "about": {
+        "title": "Acerca del módulo",
+        "description": "Ver información, versión y licencia del módulo."
       }
     },
     "mini_settings_language": {
       "title": "Cambiar idioma"
-    },
-    "mini_settings_theme": {
-      "title": "Cambiar tema del WebUI",
-      "theme": {
-        "dark": "Modo Oscuro",
-        "light": "Modo Claro",
-        "amoled": "Modo AMOLED",
-        "system_based": "Tema basado en el sistema"
-      }
     },
     "mini_settings_customization": {
       "title": "Personalización",
       "language": {
         "title": "Cambiar idioma",
         "description": "Cambia el idioma del WebUI al seleccionado."
-      },
-      "theme": {
-        "title": "Cambiar el tema del WebUI",
-        "description": "Elige el tema del sistema para el WebUI actual."
       },
       "fullscreen": {
         "title": "Desactivar el modo de pantalla completa en el WebUI",
@@ -105,6 +91,13 @@
         "title": "Activar fuente del sistema",
         "description": "Esta opción habilitará la fuente del sistema en el WebUI actual. NOTA: Puede no ser compatible con FlipFont"
       }
+    },
+    "mini_settings_about": {
+      "title": "Acerca del módulo",
+      "authorLabel": "Autor",
+      "sourceCode": "Código fuente del módulo",
+      "moduleLicense": "Licencia del módulo",
+      "moduleLicenseValue": "AGPL 3"
     }
   },
   "globals": {

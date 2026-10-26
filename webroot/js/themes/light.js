@@ -1,10 +1,12 @@
 import { setLightNav } from './lightNavbar.js'
+import { clearMonetTheme } from './common.js'
 
 const rootCss = document.querySelector(':root')
 
 
 export function setLight(chooseSet) {
-  rootCss.style.setProperty('--background', '#f2f2f2')
+  clearMonetTheme(rootCss)
+  rootCss.style.setProperty('--zu-background', '#f2f2f2')
   rootCss.style.setProperty('--status-ok-bg', '#dff9e5')
   rootCss.style.setProperty('--status-ok-text', '#101510')
   rootCss.style.setProperty('--status-error-bg', '#8d1d19')
