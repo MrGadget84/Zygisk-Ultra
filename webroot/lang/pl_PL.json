@@ -63,8 +63,8 @@
       "orginalDevelopers": "Oryginalni autorzy modułu",
       "WebUILicense": "Licencja WebUI",
       "umount": {
-        "title": "Zygisk-Ultra Umount",
-        "description": "Włącz lub wyłącz Zygisk-Ultra Umount."
+        "title": "GhostMount",
+        "description": "Włącz lub wyłącz GhostMount."
       },
       "customization": {
         "title": "Personalizacja",

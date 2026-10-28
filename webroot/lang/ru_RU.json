@@ -62,8 +62,8 @@
       "WebUIDevelopers": "Разработчик(и) WebUI",
       "orginalDevelopers": "Разработчик(и) оригинального модуля",
       "umount": {
-        "title": "Zygisk-Ultra Umount",
-        "description": "Включить или отключить Zygisk-Ultra Umount."
+        "title": "GhostMount",
+        "description": "Включить или отключить GhostMount."
       },
       "customization": {
         "title": "Кастомизация",

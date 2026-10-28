@@ -62,8 +62,8 @@
       "WebUIDevelopers": "Pengembang WebUI",
       "orginalDevelopers": "Pengembang Modul Asli",
       "umount": {
-        "title": "Zygisk-Ultra Umount",
-        "description": "Aktifkan atau nonaktifkan Zygisk-Ultra Umount."
+        "title": "GhostMount",
+        "description": "Aktifkan atau nonaktifkan GhostMount."
       },
       "customization": {
         "title": "Kustomisasi",

@@ -811,7 +811,7 @@ const setIntervalId = setInterval(() => {
 	if (toggle) {
 		clearInterval(setIntervalId)
 
-		exec("[[ -e '/data/adb/Zygisk-Ultra/unmount' ]] && echo '1' || echo '0'").then(result => {
+		exec("[[ -e '/data/adb/zygiskultra/unmount' ]] && echo '1' || echo '0'").then(result => {
 			if (result.errno === 0) {
 				Boolean(Number(result.stdout)) ? (toggle.checked = true) : (toggle.checked = false)
 			}
@@ -823,10 +823,10 @@ const setIntervalId = setInterval(() => {
 				const enabled = !toggle.checked
 
 				if (enabled) {
-					exec('rm -f /data/adb/Zygisk-Ultra/unmount')
+					exec('rm -f /data/adb/zygiskultra/unmount')
 				} else {
-					exec('mkdir -p /data/adb/Zygisk-Ultra')
-					exec('touch /data/adb/Zygisk-Ultra/unmount')
+					exec('mkdir -p /data/adb/zygiskultra')
+					exec('touch /data/adb/zygiskultra/unmount')
 				}
 			}
 		})

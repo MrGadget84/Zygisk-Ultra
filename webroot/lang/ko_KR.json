@@ -62,8 +62,8 @@
       "WebUIDevelopers": "WebUI 개발자",
       "orginalDevelopers": "원작 모듈 개발자",
       "umount": {
-        "title": "Zygisk-Ultra Umount",
-        "description": "Zygisk-Ultra Umount를 활성화하거나 비활성화합니다."
+        "title": "GhostMount",
+        "description": "GhostMount를 활성화하거나 비활성화합니다."
       },
       "customization": {
         "title": "사용자 지정",

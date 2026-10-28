@@ -62,8 +62,8 @@
       "WebUIDevelopers": "WebUI Geliştirici(leri)",
       "orginalDevelopers": "Orijinal Modül Geliştirici(leri)",
       "umount": {
-        "title": "Zygisk-Ultra Umount",
-        "description": "Zygisk-Ultra Umount özelliğini etkinleştirin veya devre dışı bırakın."
+        "title": "GhostMount",
+        "description": "GhostMount özelliğini etkinleştirin veya devre dışı bırakın."
       },
       "customization": {
         "title": "Özelleştirme",

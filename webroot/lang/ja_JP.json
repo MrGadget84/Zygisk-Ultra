@@ -62,8 +62,8 @@
       "WebUIDevelopers": "WebUI の開発者",
       "orginalDevelopers": "オリジナルのモジュールの開発者",
       "umount": {
-        "title": "Zygisk-Ultra Umount",
-        "description": "Zygisk-Ultra Umount を有効または無効にします。"
+        "title": "GhostMount",
+        "description": "GhostMount を有効または無効にします。"
       },
       "customization": {
         "title": "カスタマイズ",

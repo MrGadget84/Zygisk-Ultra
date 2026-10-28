@@ -62,8 +62,8 @@
       "WebUIDevelopers": "WebUI 开发者",
       "orginalDevelopers": "原始模块开发者",
       "umount": {
-        "title": "Zygisk-Ultra Umount",
-        "description": "启用或禁用 Zygisk-Ultra Umount。"
+        "title": "GhostMount",
+        "description": "启用或禁用 GhostMount。"
       },
       "customization": {
         "title": "自定义",

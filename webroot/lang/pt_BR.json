@@ -62,8 +62,8 @@
       "WebUIDevelopers": "Desenvolvedor(es) de WebUI",
       "orginalDevelopers": "Desenvolvedor(es) do Módulo Original",
       "umount": {
-        "title": "Zygisk-Ultra Umount",
-        "description": "Ativar ou desativar o Zygisk-Ultra Umount."
+        "title": "GhostMount",
+        "description": "Ativar ou desativar o GhostMount."
       },
       "customization": {
         "title": "Personalização",

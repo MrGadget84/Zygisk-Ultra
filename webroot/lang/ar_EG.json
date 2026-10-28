@@ -62,8 +62,8 @@
       "WebUIDevelopers": "مطورو WebUI",
       "orginalDevelopers": "المطورون الأصليون للإضافة",
       "umount": {
-        "title": "Zygisk-Ultra Umount",
-        "description": "تمكين أو تعطيل Zygisk-Ultra Umount."
+        "title": "GhostMount",
+        "description": "تمكين أو تعطيل GhostMount."
       },
       "customization": {
         "title": "التخصيص",

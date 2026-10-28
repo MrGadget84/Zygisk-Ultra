@@ -62,8 +62,8 @@
       "WebUIDevelopers": "Những nhà phát triển WebUI",
       "orginalDevelopers": "Những nhà phát triển mô-đun gốc",
       "umount": {
-        "title": "Zygisk-Ultra Umount",
-        "description": "Bật hoặc tắt Zygisk-Ultra Umount."
+        "title": "GhostMount",
+        "description": "Bật hoặc tắt GhostMount."
       },
       "customization": {
         "title": "Tùy chỉnh",
