@@ -60,19 +60,6 @@ Zygisk-Ultra — це форк Zygisk Next, самостійної реаліз�
 - Для перекладів README ви можете створити новий файл у папці `READMEs`, дотримуючись конвенції іменування `README_<language>.md`, де `<language>` — це код мови (наприклад, `README_pt-BR.md` для бразильської португальської), та відкрити pull-запит до гілки `main` зі своїми змінами.
 - Для перекладів веб-інтерфейсу Zygisk-Ultra вам слід спочатку долучитися до нашого проєкту на [Crowdin](https://crowdin.com/project/zygiskultra). Після затвердження завантажте звідти файл `.json` і відкрийте запит на злиття зі своїми змінами — додавши файл `.json` до папки `webroot/lang`, а свої дані про автора — до файлу `TRANSLATOR.md`, в алфавітному порядку.
 
-## Підтримка
-
-Якщо у вас є питання щодо Zygisk-Ultra або інших проєктів PerformanC, приєднуйтесь до будь-якого з наведених нижче каналів:
-
-- Канал у Discord: [PerformanC](https://discord.gg/uPveNfTuCJ)
-- Канал Zygisk-Ultra у Telegram: [@zygiskultra](https://t.me/zygiskultra)
-- Канал PerformanC у Telegram: [@performancorg](https://t.me/performancorg)
-- Група PerformanC у Signal: [@performanc](https://signal.group/#CjQKID3SS8N5y4lXj3VjjGxVJnzNsTIuaYZjj3i8UhipAS0gEhAedxPjT5WjbOs6FUuXptcT)
-
-## Внесок
-
-Для участі у розробці Zygisk-Ultra обов’язково слід дотримуватися [Рекомендацій щодо внесення змін](https://github.com/PerformanC/contributing) від PerformanC, а також дотримуватися Політики безпеки, Кодексу поведінки та стандартів синтаксису.
-
 ## Ліцензія
 
 Zygisk-Ultra розповсюджується на умовах ліцензії [AGPL 3.0](./LICENSE). Більше інформації про неї можна знайти на сайті [Open Source Initiative](https://opensource.org/licenses/AGPL-3.0).

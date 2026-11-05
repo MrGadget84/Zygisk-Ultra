@@ -61,21 +61,6 @@ Saat ini ada dua cara untuk berkontribusi dalam terjemahan untuk Zygisk-Ultra:
 - Untuk terjemahan README, Anda dapat membuat file baru di folder `READMEs`, mengikuti konvensi penamaan `README_<bahasa>.md`, di mana `<bahasa>` adalah kode bahasa (misalnya, `README_id-ID.md` untuk Bahasa Indonesia), dan membuka pull request ke `main` branch.
 - Untuk terjemahan WebUI Zygisk-Ultra, Anda harus berkontribusi terlebih dahulu di [Crowdin](https://crowdin.com/project/zygiskultra). Setelah disetujui, ambil file `.json` dari sana dan buka pull request dengan perubahan Anda -- tambahkan file `.json` ke folder `webroot/lang` dan kredit Anda ke file TRANSLATOR.md, dalam urutan alfabet.
 
-## Dukungan
-
-Untuk pertanyaan terkait Zygisk-Ultra atau proyek PerformanC lainnya, jangan ragu untuk bergabung dengan salah satu saluran berikut:
-
-Untuk pertanyaan terkait Zygisk-Ultra atau proyek PerformanC lainnya, silakan bergabung ke salah satu saluran berikut:
-
-- Saluran Discord: [PerformanC](https://discord.gg/uPveNfTuCJ)
-- Saluran Telegram Zygisk-Ultra: [@zygiskultra](https://t.me/zygiskultra)
-- Saluran Telegram PerformanC: [@performancorg](https://t.me/performancorg)
-- Grup Signal PerformanC: [@performanc](https://signal.group/#CjQKID3SS8N5y4lXj3VjjGxVJnzNsTIuaYZjj3i8UhipAS0gEhAedxPjT5WjbOs6FUuXptcT)
-
-## Kontribusi
-
-Wajib mengikuti [Pedoman Kontribusi](https://github.com/PerformanC/contributing) PerformanC's untuk berkontribusi pada Zygisk-Ultra. Sesuai dengan Kebijakan Keamanan, Kode Etik, standar struktur dan format yang berlaku.
-
 ## Lisensi
 
 Zygisk-Ultra sebagian besar berlisensi di bawah GPL, oleh Dr-TSNG, tetapi juga AGPL 3.0, oleh The PerformanC Organization, untuk kode yang ditulis ulang. Anda dapat juga membaca lebih lanjut di [Open Source Initiative](https://opensource.org/licenses/AGPL-3.0).

@@ -92,19 +92,6 @@
 - برای ترجمه README، می‌توانید یک فایل جدید در پوشه `READMEs` ایجاد کنید و از قرارداد نامگذاری `README_<زبان>.md` پیروی کنید؛ که در آن `<زبان>` کد زبان است (مثلاً `README_pt-BR.md` برای پرتغالی برزیلی)، و یک pull request به شاخه `main` با تغییرات خود باز کنید.
 - برای ترجمه WebUI زایگیسک، ابتدا باید در [Crowdin](https://crowdin.com/project/zygiskultra) ما مشارکت کنید. پس از تأیید، فایل `.json` را از آنجا دریافت کنید و یک pull request با تغییرات خود باز کنید؛ فایل `.json` را به پوشه `webroot/lang` و اعتبارات خود را به فایل `TRANSLATOR.md` به ترتیب الفبایی اضافه کنید.
 
-## پشتیبانی
-
-برای هر سوالی مرتبط با Zygisk-Ultra یا سایر پروژه‌های PerformanC، می‌توانید به هر یک از کانال‌های زیر بپیوندید:
-
-- کانال دیسکورد: [PerformanC](https://discord.gg/uPveNfTuCJ)
-- کانال تلگرام Zygisk-Ultra: [@zygiskultra](https://t.me/zygiskultra)
-- کانال تلگرام PerformanC: [@performancorg](https://t.me/performancorg)
-- گروه سیگنال PerformanC: [@performanc](https://signal.group/#CjQKID3SS8N5y4lXj3VjjGxVJnzNsTIuaYZjj3i8UhipAS0gEhAedxPjT5WjbOs6FUuXptcT)
-
-## مشارکت
-
-برای مشارکت در Zygisk-Ultra، پیروی از [دستورالعمل‌های مشارکت](https://github.com/PerformanC/contributing) PerformanC الزامی است. از جمله سیاست امنیتی، آیین‌نامه رفتاری و استاندارد سینتکس آن.
-
 ## مجوز
 
 Zygisk-Ultra تحت مجوز [AGPL 3.0](./LICENSE) منتشر شده است. می‌توانید اطلاعات بیشتری را در [Open Source Initiative](https://opensource.org/licenses/AGPL-3.0) بخوانید.

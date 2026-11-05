@@ -613,7 +613,7 @@ static struct maps_info *get_loaded_libraries(void) {
   /* INFO: 2.: ReZygisk itself (loaded via RCSOLoader) */
   if (start_addr && block_size > 0) {
     struct stat st;
-    if (stat("/data/adb/modules/rezygisk/lib" LP_SELECT("", "64") "/libzygisk.so", &st) != 0) {
+    if (stat("/data/adb/modules/zygiskultra/lib" LP_SELECT("", "64") "/libzygisk.so", &st) != 0) {
       LOGE("Failed to stat ReZygisk library");
 
       free_maps(maps);
@@ -639,7 +639,7 @@ static struct maps_info *get_loaded_libraries(void) {
       .inode = st.st_ino,
       .perms = PROT_READ,
       .is_private = true,
-      .path = strdup("/data/adb/modules/rezygisk/lib" LP_SELECT("", "64") "/libzygisk.so")
+      .path = strdup("/data/adb/modules/zygiskultra/lib" LP_SELECT("", "64") "/libzygisk.so")
     };
     if (!maps->maps[maps->length - 1].path) {
       LOGE("Failed to duplicate path for ReZygisk");

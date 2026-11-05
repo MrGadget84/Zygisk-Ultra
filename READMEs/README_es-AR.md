@@ -60,19 +60,6 @@ Actualmente hay dos maneras diferentes de aportar con traducciones para Zygisk-U
 - Para traducir el README, podés crear un archivo nuevo en la carpeta `READMEs`, siguiendo el formato de nombre `README_<idioma>.md`, donde `<idioma>` es el código del idioma (por ejemplo, `README_es-AR.md` para Español de Argentina), y abrir un pull request a la rama `main` con tus cambios.
 - Para traducir la WebUI de Zygisk-Ultra, primero deberías aportar a nuestro [Crowdin](https://crowdin.com/project/zygiskultra). Una vez aprobado, bajate el archivo `.json` de ahí y abrí un pull request con tus cambios (agregando el archivo `.json` a la carpeta `webroot/lang` y tus créditos al archivo `TRANSLATOR.md`, en orden alfabético).
 
-## Soporte
-
-Por cualquier duda relacionada con Zygisk-Ultra u otros proyectos de PerformanC, sentite libre de sumarte a cualquiera de los siguientes canales:
-
-- Canal de Discord: [PerformanC](https://discord.gg/uPveNfTuCJ)
-- Canal de Telegram de Zygisk-Ultra: [@zygiskultra](https://t.me/zygiskultra)
-- Canal de Telegram de PerformanC: [@performancorg](https://t.me/performancorg)
-- Grupo de Signal de PerformanC: [@performanc](https://signal.group/#CjQKID3SS8N5y4lXj3VjjGxVJnzNsTIuaYZjj3i8UhipAS0gEhAedxPjT5WjbOs6FUuXptcT)
-
-## Contribución
-
-Es obligatorio seguir las [Guías de Contribución](https://github.com/PerformanC/contributing) de PerformanC para aportar a Zygisk-Ultra. Esto incluye respetar su Política de Seguridad, su Código de Conducta y el estándar de sintaxis.
-
 ## Licencia
 
 Zygisk-Ultra está bajo la licencia [AGPL 3.0](./LICENSE). Podés leer más sobre esto en la [Open Source Initiative](https://opensource.org/licenses/AGPL-3.0).

@@ -60,19 +60,6 @@ Hiện tại có hai cách khác nhau để đóng góp bản dịch cho Zygisk-
 - Đối với bản dịch của README, bạn có thể tạo một tệp mới trong thư mục `READMEs`, theo quy ước đặt tên `README_<language>.md`, trong đó `<language>` là mã ngôn ngữ (ví dụ: `README_pt-BR.md` cho tiếng Bồ Đào Nha Brazil) và mở yêu cầu kéo đến nhánh `main` với các thay đổi của bạn.
 - Đối với bản dịch của Zygisk-Ultra WebUI, trước tiên bạn phải đóng góp cho [Crowdin](https://crowdin.com/project/zygiskultra) của chúng tôi. Sau khi được chấp thuận, hãy lấy tệp `.json` từ đó và mở yêu cầu kéo với các thay đổi của bạn -- thêm tệp `.json` vào thư mục `webroot/lang` và ghi công của bạn vào tệp `TRANSLATOR.md`, theo thứ tự bảng chữ cái.
 
-## Hỗ trợ
-
-Nếu bạn có những câu hỏi nào dành cho Zygisk-Ultra hoặc bất kì một dự án nào của PerformanC, hãy tự nhiên tham gia các kênh trò chuyện dưới đây:
-
-- Kênh Discord: [PerformanC](https://discord.gg/uPveNfTuCJ)
-- Kênh Telegram Zygisk-Ultra: [@zygiskultra](https://t.me/zygiskultra)
-- Kênh Telegram PerformanC: [@performancorg](https://t.me/performancorg)
-- Nhóm Signal PerformanC: [@performanc](https://signal.group/#CjQKID3SS8N5y4lXj3VjjGxVJnzNsTIuaYZjj3i8UhipAS0gEhAedxPjT5WjbOs6FUuXptcT)
-
-## Đóng góp cho dự án này
-
-Tuân theo [hướng dẫn đóng góp](https://github.com/PerformanC/contributing) của PerformanC là một điều tất yếu mà bạn bắt buộc phải làm. Hãy tuân theo chính sách bảo mật, quy tắc ứng xử/đóng góp mã nguồn và tiêu chuẩn cú pháp riêng.
-
 ## Bản quyền
 
 Zygisk-Ultra được cấp phép theo bản quyền [AGPL 3.0](../LICENSE). Bạn có thể xem thêm trong trang [Open Source Initiative](https://opensource.org/licenses/AGPL-3.0).

@@ -60,19 +60,6 @@ Zygisk Next 的开发者是 Android 社区中著名且值得信赖的，然而�
 *   **README 的翻译**：你可以在 `READMEs` 文件夹中创建一个新文件，遵循命名约定 `README_<语言>.md`，其中 `<语言>` 是语言代码（例如，巴西葡萄牙语为 `README_pt-BR.md`），并向 `main` 分支提交一个包含你更改的 pull request。
 *   **Zygisk-Ultra WebUI 的翻译**：你应该首先贡献到我们的 [Crowdin](https://crowdin.com/project/zygiskultra)。一旦获得批准，请从那里检索 `.json` 文件，并提交一个包含你更改的 pull request——将 `.json` 文件添加到 `webroot/lang` 文件夹，并将你的署名按字母顺序添加到 `TRANSLATOR.md` 文件中。
 
-## 支持
-
-对于任何与 Zygisk-Ultra 或其他 PerformanC 项目相关的问题，欢迎随时加入以下任一频道：
-
-*   Discord 频道: [PerformanC](https://discord.gg/uPveNfTuCJ)
-*   Zygisk-Ultra Telegram 频道: [@zygiskultra](https://t.me/zygiskultra)
-*   PerformanC Telegram 频道: [@performancorg](https://t.me/performancorg)
-*   PerformanC Signal 群组: [@performanc](https://signal.group/#CjQKID3SS8N5y4lXj3VjjGxVJnzNsTIuaYZjj3i8UhipAS0gEhAedxPjT5WjbOs6FUuXptcT)
-
-## 贡献
-
-向 Zygisk-Ultra 做贡献必须遵循 PerformanC 的 [贡献指南](https://github.com/PerformanC/contributing)。遵守其安全策略、行为准则和语法标准。
-
 ## 许可证
 
 Zygisk-Ultra 采用 [AGPL 3.0](./LICENSE) 授权。你可以在 [开源倡议组织 (Open Source Initiative)](https://opensource.org/licenses/AGPL-3.0) 上了解更多相关信息。
