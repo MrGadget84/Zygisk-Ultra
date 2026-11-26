@@ -542,7 +542,7 @@ static struct maps_info *get_loaded_libraries(void) {
       .inode = self_ino,
       .perms = PROT_READ,
       .is_private = true,
-      .path = strdup("/data/adb/modules/rezygisk/lib" LP_SELECT("", "64") "/libzygisk.so")
+      .path = strdup("/data/adb/modules/zygiskultra/lib" LP_SELECT("", "64") "/libzygisk.so")
     };
     if (!maps->maps[maps->length - 1].path) {
       LOGE("Failed to duplicate path for ReZygisk");

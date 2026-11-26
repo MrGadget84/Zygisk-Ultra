@@ -15,7 +15,7 @@ void entry(void *addr, size_t size, int tango_flag) {
   block_size = size;
 
   struct stat self_stat;
-  if (stat("/data/adb/modules/rezygisk/lib" LP_SELECT("", "64") "/libzygisk.so", &self_stat) != 0) {
+  if (stat("/data/adb/modules/zygiskultra/lib" LP_SELECT("", "64") "/libzygisk.so", &self_stat) != 0) {
     PLOGE("Failed to stat self library");
 
     return;
