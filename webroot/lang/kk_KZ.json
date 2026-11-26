@@ -1,0 +1,106 @@
+{
+  "langName": "Қазақша (Қазақстан)",
+  "pages": {
+    "home": {
+      "title": "Басты бет",
+      "unknown": "Белгісіз",
+      "androidVersion": "Android нұсқасы",
+      "linuxKernelVersion": "Linux ядросының нұсқасы",
+      "status": {
+        "notWorking": "Жұмыс істемейді",
+        "ok": "Жұмыс істеп тұр!",
+        "partially": "Ішінара жұмыс істеп тұр"
+      },
+      "info": {
+        "version": "Нұсқа",
+        "root": "Root жүйесі",
+        "zygote": {
+          "injected": "Инъекция жасалды",
+          "notInjected": "Инъекция жасалмаған",
+          "unknown": "Белгісіз"
+        }
+      }
+    },
+    "actions": {
+      "title": "Әрекеттер",
+      "monitor": {
+        "title": "Монитор",
+        "status": {
+          "tracing": "Бақылауда",
+          "stopping": "Тоқтатылуда",
+          "stopped": "Тоқтатылды",
+          "exiting": "Аяқталуда",
+          "unknown": "Белгісіз"
+        },
+        "button": {
+          "start": "Бастау",
+          "stop": "Тоқтату",
+          "pause": "Кідірту"
+        }
+      }
+    },
+    "modules": {
+      "title": "Модульдер",
+      "notAvaliable": "Мұнда Zygisk қолданатын модульдер жоқ.",
+      "arch": "Архитектура: "
+    },
+    "settings": {
+      "title": "Баптаулар",
+      "language": {
+        "title": "Тілді өзгерту",
+        "description": "WebUI тілін таңдалған тілге өзгерту."
+      },
+      "fullscreen": {
+        "title": "WebUI толық экран режимін өшіру",
+        "description": "Бұл параметр WebUI-дің бүкіл экранды толтыруын тоқтатады."
+      },
+      "font": {
+        "title": "Жүйелік қаріпті қосу",
+        "description": "Бұл параметр ағымдағы WebUI-де жүйелік қаріпті қосады. ЕСКЕРТУ: FlipFont-пен үйлесімді болмауы мүмкін."
+      },
+      "moduleDevelopers": "Модуль әзірлеушілері",
+      "WebUIDevelopers": "WebUI әзірлеушілері",
+      "orginalDevelopers": "Бастапқы модуль әзірлеушілері",
+      "umount": {
+        "title": "GhostMount",
+        "description": "GhostMount функциясын қосу немесе өшіру."
+      },
+      "customization": {
+        "title": "Теңшеу",
+        "description": "WebUI көрінісі мен жұмысын теңшеу."
+      },
+      "about": {
+        "title": "Модуль туралы",
+        "description": "Модуль туралы ақпаратты, нұсқасын және лицензиясын көру."
+      }
+    },
+    "mini_settings_language": {
+      "title": "Тілді өзгерту"
+    },
+    "mini_settings_customization": {
+      "title": "Теңшеу",
+      "language": {
+        "title": "Тілді өзгерту",
+        "description": "WebUI тілін таңдалған тілге өзгерту."
+      },
+      "fullscreen": {
+        "title": "WebUI толық экран режимін өшіру",
+        "description": "Бұл параметр WebUI-дің бүкіл экранды толтыруын тоқтатады."
+      },
+      "font": {
+        "title": "Жүйелік қаріпті қосу",
+        "description": "Бұл параметр ағымдағы WebUI-де жүйелік қаріпті қосады. ЕСКЕРТУ: FlipFont-пен үйлесімді болмауы мүмкін."
+      }
+    },
+    "mini_settings_about": {
+      "title": "Модуль туралы",
+      "authorLabel": "Автор",
+      "sourceCode": "Модульдің бастапқы коды",
+      "moduleLicense": "Модуль лицензиясы",
+      "moduleLicenseValue": "AGPL 3"
+    }
+  },
+  "globals": {
+    "unknown": "Белгісіз"
+  }
+}

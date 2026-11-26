@@ -5,18 +5,18 @@
       "title": "Главная",
       "unknown": "Неизвестно",
       "androidVersion": "Версия Android",
-      "linuxKernelVersion": "Версия Linux",
+      "linuxKernelVersion": "Версия ядра",
       "status": {
         "notWorking": "Не работает",
-        "ok": "Работает",
-        "partially": "Частично работает"
+        "ok": "Работает!",
+        "partially": "Работает частично"
       },
       "info": {
         "version": "Версия",
-        "root": "Root реализация",
+        "root": "Реализация рут",
         "zygote": {
-          "injected": "Инъецировано",
-          "notInjected": "Не инъецировано",
+          "injected": "Работает",
+          "notInjected": "Не работает",
           "unknown": "Неизвестно"
         }
       }
@@ -27,7 +27,7 @@
         "title": "Обзор",
         "status": {
           "tracing": "Состояние",
-          "stopping": "Остановка",
+          "stopping": "Остановить",
           "stopped": "Остановлено",
           "exiting": "Выход",
           "unknown": "Неизвестно"
@@ -41,7 +41,7 @@
     },
     "modules": {
       "title": "Модули",
-      "notAvaliable": "Здесь нет модулей, использующих Zygisk.",
+      "notAvaliable": "Здесь нет модулей, использующих реализацию Zygisk.",
       "arch": "Архитектура: "
     },
     "settings": {
@@ -54,30 +54,50 @@
         "title": "Выключить полноэкранный режим в WebUI",
         "description": "С данной опцией, WebUI не будет занимать весь экран."
       },
-      "theme": {
-        "title": "Сменить тему WebUI",
-        "description": "Выберите вашу системную тему для текущего WebUI."
-      },
       "font": {
         "title": "Включить системный шрифт",
-        "description": "Эта опция включит системный шрифт в текущем WebUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
+        "description": "Эта опция включит системный шрифт в WebUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
       },
       "moduleDevelopers": "Разработчик(и) модуля",
       "WebUIDevelopers": "Разработчик(и) WebUI",
       "orginalDevelopers": "Разработчик(и) оригинального модуля",
-      "moduleLicense": "Лицензия модуля"
+      "umount": {
+        "title": "GhostMount",
+        "description": "Включить или отключить GhostMount."
+      },
+      "customization": {
+        "title": "Кастомизация",
+        "description": "Настроить внешний вид и поведение WebUI."
+      },
+      "about": {
+        "title": "О модуле",
+        "description": "Информация о модуле, версия и лицензия."
+      }
     },
     "mini_settings_language": {
       "title": "Сменить язык"
     },
-    "mini_settings_theme": {
-      "title": "Сменить тему WebUI",
-      "theme": {
-        "dark": "Тёмная тема",
-        "light": "Светлая тема",
-        "amoled": "Amoled тема",
-        "system_based": "Системная тема"
+    "mini_settings_customization": {
+      "title": "Кастомизация",
+      "language": {
+        "title": "Сменить язык",
+        "description": "Сменить язык WebUI на выбранный."
+      },
+      "fullscreen": {
+        "title": "Выключить полноэкранный режим в WebUI",
+        "description": "С данной опцией, WebUI не будет занимать весь экран."
+      },
+      "font": {
+        "title": "Включить системный шрифт",
+        "description": "Эта опция включит системный шрифт в WebUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
       }
+    },
+    "mini_settings_about": {
+      "title": "О модуле",
+      "authorLabel": "Автор",
+      "sourceCode": "Исходный код модуля",
+      "moduleLicense": "Лицензия модуля",
+      "moduleLicenseValue": "AGPL 3"
     }
   },
   "globals": {

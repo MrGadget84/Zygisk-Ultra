@@ -9,6 +9,12 @@ import utils from './utils.js'
 const moduleName = 'TreatWheel'
 const head = document.getElementsByTagName('head')[0]
 const miniPageRegex = /mini_(.*)_(.*)/
+/* UI parent paths can differ from the storage path. Language is nested in Customization. */
+const miniPageParentOverrides = {
+  mini_settings_language: 'mini_settings_customization',
+  mini_settings_about: 'settings'
+}
+const miniPageCloseBindings = new Map()
 
 export const allMainPages = [
   'home',
@@ -19,7 +25,8 @@ export const allMainPages = [
 
 export const allMiniPages = [
   'mini_settings_language',
-  'mini_settings_theme'
+  'mini_settings_customization',
+  'mini_settings_about'
 ]
 
 export const allPages = [ ...allMainPages, ...allMiniPages ]
@@ -27,6 +34,8 @@ export const allPages = [ ...allMainPages, ...allMiniPages ]
 const loadedPageView = []
 /* INFO: Prevent overlapping page transitions when users tap navigation rapidly. */
 let isPageTransitioning = false
+/* Ignore the root fallback when a mini-page intentionally consumes history.back(). */
+let suppressNextGlobalPopstate = false
 /* INFO: Direct assignment would link both arrays. We do not want that. */
 const sufferedUpdate = [ ...allPages ]
 const pageReplacements = allPages.reduce((obj, pageId) => {
@@ -175,6 +184,109 @@ function isMiniPage(pageId) {
   return miniPageRegex.test(pageId)
 }
 
+/* INFO: Every mini page needs its own title and back button, including when
+         navigating from one mini page to another (for example Customization -> Theme). */
+function ensureMiniPageHeader(pageSpecificContent) {
+  if (pageSpecificContent.querySelector('.back_icon')) return
+
+  const minipage_header = `
+    <div class="header" style="padding-left: 20px; display: flex; align-items: center; justify-content: initial;">
+      <div id="minipage_close" class="back_icon" style="width: 36px; height: 36px; margin-right: 6px;"></div>
+      <div id="minipage_title">Zygisk-Ultra: {{title}}</div>
+    </div>
+  `
+
+  pageSpecificContent.insertAdjacentHTML('afterbegin', minipage_header)
+}
+
+function getMiniPageParent(pageId) {
+  if (miniPageParentOverrides[pageId]) return miniPageParentOverrides[pageId]
+
+  const miniPageIdData = miniPageRegex.exec(pageId)
+  return miniPageIdData ? miniPageIdData[1] : null
+}
+
+function getMainPageAncestor(pageId) {
+  let parentPage = getMiniPageParent(pageId)
+  const visited = new Set([pageId])
+
+  while (parentPage && isMiniPage(parentPage) && !visited.has(parentPage)) {
+    visited.add(parentPage)
+    parentPage = getMiniPageParent(parentPage)
+  }
+
+  return parentPage
+}
+
+function goBackWithoutGlobalFallback() {
+  suppressNextGlobalPopstate = true
+  history.back()
+}
+
+function detachMiniPageCloseListener(pageId) {
+  const binding = miniPageCloseBindings.get(pageId)
+  if (!binding) return
+
+  binding.backIcon.removeEventListener('click', binding.onClick)
+  window.removeEventListener('popstate', binding.onPopState)
+  miniPageCloseBindings.delete(pageId)
+}
+
+function attachMiniPageCloseListener(pageId, pageSpecificContent) {
+  /* INFO: Reusing a mini page must not accumulate click/popstate listeners. */
+  detachMiniPageCloseListener(pageId)
+
+  const minipage_back_icon = pageSpecificContent.querySelector('.back_icon')
+  if (!minipage_back_icon) throw new Error(`Mini page header missing for ${pageId}`)
+
+  let isClosing = false
+  async function miniPageCloseListener(isClick) {
+    if (isClosing) return true
+
+    const parentPage = getMiniPageParent(pageId)
+
+    /* Route explicit close-button taps through the same transition manager as
+       every other navigation. This avoids leaving stale navbar/transition state
+       after returning from a nested page such as Language -> Customization. */
+    if (isClick) {
+      if (!parentPage) return true
+      await loadPage(parentPage)
+      return true
+    }
+
+    /* Browser/system Back already popped the overlay history entry. If the
+       parent is another mini page, restore the overlay state and return to it
+       without popping the Settings entry underneath. */
+    if (isMiniPage(parentPage)) {
+      if (isPageTransitioning) return true
+      history.pushState(true, '', location.pathname)
+      await loadPage(parentPage)
+      return true
+    }
+
+    isClosing = true
+    setNavbar(parentPage)
+    await runMiniPageLeave(pageSpecificContent)
+    unuseHTML(pageSpecificContent, pageId, false)
+    document.getElementById(`${pageId}_css`).media = 'not all'
+    detachMiniPageCloseListener(pageId)
+
+    return true
+  }
+
+  const onClick = () => { void miniPageCloseListener(true) }
+  const onPopState = () => {
+    /* INFO: Only the selected mini page may react, and not while loadPage owns
+       the transition (for example, tapping a bottom-navigation destination). */
+    if (whichCurrentPage() !== pageId || isPageTransitioning) return
+    void miniPageCloseListener(false)
+  }
+
+  minipage_back_icon.addEventListener('click', onClick)
+  window.addEventListener('popstate', onPopState)
+  miniPageCloseBindings.set(pageId, { backIcon: minipage_back_icon, onClick, onPopState })
+}
+
 function isHTMLUnused(page, pageId) {
   /* INFO: Detect whether this page DOM is currently in the prefixed/inactive state. */
   if (!page || !page.childNodes) return false
@@ -281,6 +393,10 @@ async function loadPages() {
       const pageSpecificContent = document.createElement('div')
       pageSpecificContent.id = `${page}_content`
       pageSpecificContent.innerHTML = pageHTML
+      /* INFO: Create mini-page headers before the initial HTML is marked inactive.
+                This keeps the header/back button inside the page's normal lifecycle,
+                including nested navigation (Customization -> Theme/Language). */
+      if (isMiniPage(page)) ensureMiniPageHeader(pageSpecificContent)
       pageSpecificContent.style.display = 'none'
       if (isMiniPage(page)) pageSpecificContent.classList.add('page_loader_mini_layer')
 
@@ -394,20 +510,25 @@ export async function loadPage(pageId) {
   isPageTransitioning = true
 
   try {
-    setNavbar(pageId)
-
     const targetIsMiniPage = isMiniPage(pageId)
     const currentIsMiniPage = currentPage ? isMiniPage(currentPage) : false
+
+    /* INFO: A mini page being left must not keep a live Back handler. */
+    if (currentIsMiniPage && currentPage !== pageId) detachMiniPageCloseListener(currentPage)
+    setNavbar(pageId)
+
     /* INFO: Main-to-main transitions switch CSS at animation midpoint to avoid style conflicts. */
     const isMainToMain = currentPage && !currentIsMiniPage && !targetIsMiniPage
     const pageSpecificContent = document.getElementById(`${pageId}_content`)
     const targetNeedsRevert = isHTMLUnused(pageSpecificContent, pageId)
 
     if (targetNeedsRevert) revertHTMLUnuse(pageSpecificContent, pageId)
+    if (targetIsMiniPage) ensureMiniPageHeader(pageSpecificContent)
     if (!isMainToMain) document.getElementById(`${pageId}_css`).media = 'all'
 
     if (!currentPage) {
       await initializePage(pageId, pageSpecificContent, targetNeedsRevert)
+      if (targetIsMiniPage) attachMiniPageCloseListener(pageId, pageSpecificContent)
       pageSpecificContent.style.display = 'block'
 
       return true
@@ -417,63 +538,57 @@ export async function loadPage(pageId) {
     if (!currentIsMiniPage && targetIsMiniPage) {
       history.pushState(true, '', location.pathname)
 
-      if (!loadedPageView.includes(pageId)) {
-        const minipage_header = `
-          <div class="header" style="padding-left: 20px; display: flex; align-items: center; justify-content: initial;">
-            <div id="minipage_close" class="back_icon" style="width: 36px; height: 36px; margin-right: 6px;"></div>
-            <div id="minipage_title">ReZygisk: {{title}}</div>
-          </div>
-        `
-        pageSpecificContent.insertAdjacentHTML('afterbegin', minipage_header)
-      }
-
       await initializePage(pageId, pageSpecificContent, targetNeedsRevert)
-
-      const minipage_back_icon = pageSpecificContent.querySelector('.back_icon')
-
-      let isClosing = false
-      async function miniPageCloseListener(isClick) {
-        if (isClosing) return true
-        isClosing = true
-
-        if (isClick) history.back()
-
-        const parentPage = miniPageRegex.exec(pageId)[1]
-        setNavbar(parentPage)
-
-        await runMiniPageLeave(pageSpecificContent)
-        unuseHTML(pageSpecificContent, pageId, false)
-        document.getElementById(`${pageId}_css`).media = 'not all'
-
-        return true
-      }
-
-      minipage_back_icon.addEventListener('click', () => miniPageCloseListener(true), { once: true })
-      window.onceTrueEvent('popstate', () => miniPageCloseListener(false))
-
+      attachMiniPageCloseListener(pageId, pageSpecificContent)
       await runMiniPageEnter(pageSpecificContent)
 
       return true
     }
 
     if (currentIsMiniPage) {
-      history.back()
+      /* Mini-to-mini navigation reuses the current overlay history entry. */
+      if (!targetIsMiniPage) goBackWithoutGlobalFallback()
 
-      /* INFO: Leaving a mini page always closes its overlay first, then opens the target page. */
       await runMiniPageLeave(currentPageContent)
       unuseHTML(currentPageContent, currentPage)
       document.getElementById(`${currentPage}_css`).media = 'not all'
+      detachMiniPageCloseListener(currentPage)
 
-      const parentPage = miniPageRegex.exec(currentPage)[1]
-      if (parentPage !== pageId && !targetIsMiniPage) {
-        document.getElementById(`${parentPage}_content`).style.display = 'none'
-        unuseHTML(document.getElementById(`${parentPage}_content`), parentPage, false)
-        document.getElementById(`${parentPage}_css`).media = 'not all'
+      if (!targetIsMiniPage) {
+        // A nested mini page can sit above another mini page (Language above
+        // Customization). Hide every intermediate layer before returning to a
+        // main page, but never hide the actual target page.
+        let ancestor = getMiniPageParent(currentPage)
+        const visitedAncestors = new Set([currentPage])
+        while (ancestor && isMiniPage(ancestor) && ancestor !== pageId && !visitedAncestors.has(ancestor)) {
+          visitedAncestors.add(ancestor)
+          const ancestorContent = document.getElementById(`${ancestor}_content`)
+          if (ancestorContent) {
+            ancestorContent.style.display = 'none'
+            unuseHTML(ancestorContent, ancestor, false)
+          }
+          const ancestorCss = document.getElementById(`${ancestor}_css`)
+          if (ancestorCss) ancestorCss.media = 'not all'
+          detachMiniPageCloseListener(ancestor)
+          ancestor = getMiniPageParent(ancestor)
+        }
+
+        const mainAncestor = getMainPageAncestor(currentPage)
+        if (mainAncestor && mainAncestor !== pageId && allMainPages.includes(mainAncestor)) {
+          const mainAncestorContent = document.getElementById(`${mainAncestor}_content`)
+          if (mainAncestorContent) {
+            mainAncestorContent.style.display = 'none'
+            unuseHTML(mainAncestorContent, mainAncestor, false)
+          }
+          const mainAncestorCss = document.getElementById(`${mainAncestor}_css`)
+          if (mainAncestorCss) mainAncestorCss.media = 'not all'
+        }
       }
 
       await initializePage(pageId, pageSpecificContent, targetNeedsRevert)
 
       if (targetIsMiniPage) {
+        attachMiniPageCloseListener(pageId, pageSpecificContent)
         await runMiniPageEnter(pageSpecificContent)
       } else {
         pageSpecificContent.style.display = 'block'
@@ -503,7 +618,7 @@ export async function loadPage(pageId) {
   } finally {
     isPageTransitioning = false
 
-    if (pageId === 'home' && currentPage !== 'home')
+    if (pageId === 'home' && currentPage !== 'home' && history.state !== null)
       history.back()
     else if (pageId !== 'home' && currentPage === 'home')
       history.pushState(true, '', location.pathname)
@@ -531,7 +646,7 @@ export async function loadMiniPage(miniPageId, unloadCb) {
   const navbar = document.getElementById('navbar')
   const navbar_support_div = document.getElementById('navbar_support_div')
 
-  page_content.style.transition = navbar.style.transition = 'filter 0.3s'
+  page_content.style.transition = navbar.style.transition = 'filter 0.1s'
   page_content.style.filter = navbar.style.filter = 'blur(10px)'
   /* INFO: Not allow it to interact with the page, just click to close */
   page_content.style.pointerEvents = navbar_support_div.style.pointerEvents = 'none'
@@ -542,9 +657,9 @@ export async function loadMiniPage(miniPageId, unloadCb) {
     if (isClick) history.back()
 
     const minipage_content = document.getElementById('minipage_content')
-    minipage_content.style.animation = 'fade-out 0.2s'
+    minipage_content.style.animation = 'fade-out 0.1s'
 
-    page_content.style.transition = navbar.style.transition = 'filter 0.2s'
+    page_content.style.transition = navbar.style.transition = 'filter 0.1s'
     page_content.style.filter = navbar.style.filter = null
     page_content.style.pointerEvents = navbar_support_div.style.pointerEvents = null
 
@@ -571,7 +686,7 @@ export async function loadMiniPage(miniPageId, unloadCb) {
     transform: translate(-50%, -50%);
     z-index: 1;
     background: none;
-    animation: fade-in 0.3s;
+    animation: fade-in 0.1s;
   `
 
   minipage_content.innerHTML = `
@@ -622,10 +737,32 @@ export function getStrings(pageId, forceDefault = false) {
     })
 }
 
-export function setLanguage(langId) {
-  localStorage.setItem(`/${moduleName}/language`, langId)
+export async function setLanguage(langId) {
+  const normalizedLangId = String(langId || 'en_US').replace(/\.json$/i, '')
+  localStorage.setItem(`/${moduleName}/language`, normalizedLangId)
 
+  /*
+   * Existing page content is refreshed lazily by initializePage() when each
+   * page is next opened. The bottom navigation, however, stays mounted all the
+   * time, so update its labels immediately instead of waiting for the WebUI to
+   * be reopened. Invalidate the page cache first so the next page transition
+   * uses the newly selected translations as well.
+   */
   sufferedUpdate.length = 0
+
+  try {
+    const response = await fetch(`lang/${normalizedLangId}.json`, { cache: 'no-store' })
+    if (!response.ok) throw new Error(`Language file returned HTTP ${response.status}`)
+    const data = await response.json()
+
+    allMainPages.forEach((page) => {
+      const titleElement = document.getElementById(`nav_${page}_title`)
+      const title = data?.pages?.[page]?.title
+      if (titleElement && typeof title === 'string') titleElement.textContent = title
+    })
+  } catch (error) {
+    console.warn('Could not immediately refresh navigation labels for the selected language.', error)
+  }
 }
 
 (async () => {
@@ -641,7 +778,7 @@ window.addEventListener('error', function (event) {
 
   console.error('Unhandled error:', event.error)
 
-  exec(`echo "Error: ${event.message}\n\n${event.error.stack}" > /data/adb/rezygisk/webui_error.log`)
+  exec(`echo "Error: ${event.message}\n\n${event.error.stack}" > /data/adb/zygiskultra/webui_error.log`)
 })
 
 window.addEventListener('unhandledrejection', function (event) {
@@ -649,11 +786,49 @@ window.addEventListener('unhandledrejection', function (event) {
 
   console.error('Unhandled promise rejection:', event.reason)
 
-  exec(`echo "Error (Unhandled Rejection): ${event.reason}\n\n${event.reason.stack}" > /data/adb/rezygisk/webui_error.log`)
+  exec(`echo "Error (Unhandled Rejection): ${event.reason}\n\n${event.reason.stack}" > /data/adb/zygiskultra/webui_error.log`)
 })
 
 window.addEventListener('popstate', async () => {
-  if (history.state !== null) return;
+  if (suppressNextGlobalPopstate) {
+    suppressNextGlobalPopstate = false
+    return
+  }
 
-  await loadPage('home')
+  if (history.state !== null) return
+
+  // Mini pages own their own Back action. Falling through to Home here races
+  // with their close handler and can leave Settings' child pages unusable.
+  if (isMiniPage(whichCurrentPage())) return
+
+  const currentPage = whichCurrentPage()
+  if (currentPage && currentPage !== 'home') await loadPage('home')
 })
+
+const setIntervalId = setInterval(() => {
+	const toggle = document.getElementById('umount_toggle')
+
+	if (toggle) {
+		clearInterval(setIntervalId)
+
+		exec("[[ -e '/data/adb/zygiskultra/unmount' ]] && echo '1' || echo '0'").then(result => {
+			if (result.errno === 0) {
+				Boolean(Number(result.stdout)) ? (toggle.checked = true) : (toggle.checked = false)
+			}
+		})
+
+		document.addEventListener('change', async event => {
+			if (event.target && event.target.matches('#umount_toggle')) {
+				const toggle = document.getElementById('umount_toggle')
+				const enabled = !toggle.checked
+
+				if (enabled) {
+					exec('rm -f /data/adb/zygiskultra/unmount')
+				} else {
+					exec('mkdir -p /data/adb/zygiskultra')
+					exec('touch /data/adb/zygiskultra/unmount')
+				}
+			}
+		})
+	}
+}, 1000)

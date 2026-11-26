@@ -27,4 +27,4 @@
 
 
 > [!NOTE]
-> Want to add your translation? Go to [Crowdin](https://crowdin.com/project/rezygisk) and translate!
+> Want to add your translation? Go to [Crowdin](https://crowdin.com/project/zygiskultra) and translate!

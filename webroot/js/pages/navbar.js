@@ -5,7 +5,6 @@ export function loadNavbar() {
 }
 
 export function setNavbar(page) {
-  /* INFO: Page loader may return false if the page is mini */
   if (allMiniPages.includes(page)) {
     allPages.forEach((page) => {
       document.getElementById(`n_${page}`).removeAttribute('checked')
@@ -17,12 +16,17 @@ export function setNavbar(page) {
   allPages.forEach((page) => {
     document.getElementById(`n_${page}`).removeAttribute('checked')
     document.getElementById(`nibg_${page}`).classList.remove('show')
-    document.getElementById(`ni_${page}`).style.background = ''
+    document.getElementById(`ni_${page}`).style.backgroundImage = ''
   })
+
+  document.querySelectorAll('#navbar label.radio').forEach((label) => {
+    label.classList.remove('nav-active')
+  })
+  document.querySelector(`#navbar label[for="n_${page}"]`)?.classList.add('nav-active')
 
   document.getElementById(`n_${page}`).setAttribute('checked', '')
   document.getElementById(`nibg_${page}`).classList.add('show')
-  document.getElementById(`ni_${page}`).style.background = `url(./assets/${page}/filled.svg)`
+  document.getElementById(`ni_${page}`).style.backgroundImage = `url(./assets/${page}/filled.svg)`
 }
 
 export function whichCurrentPage() {
@@ -35,12 +39,10 @@ export function whichCurrentPage() {
 
 document.querySelectorAll('[name=navbutton]').forEach((element) => {
   element.addEventListener('click', async (event) => {
-    /* INFO: Keep radio state controlled by page loader to avoid UI desync under rapid taps. */
     event.preventDefault()
 
     const value = event.target.value
 
-    /* INFO: Wait for page loader so fast clicks cannot race navbar state updates. */
     await loadPage(value)
   })
 })

@@ -234,7 +234,7 @@ static bool update_mnt_ns(enum mount_namespace_state mns_state, bool dry_run) {
   ret (*old_##func)(__VA_ARGS__);     \
   ret new_##func(__VA_ARGS__)
 
-/* INFO: ReZygisk already performs a fork in zygisk_context::fork_pre, because of that,
+/* INFO: Zygisk-Ultra already performs a fork in zygisk_context::fork_pre, because of that,
            we avoid duplicate fork in nativeForkAndSpecialize and nativeForkSystemServer
            by caching the pid in fork_pre function and only performing fork if the pid
            is non-0, or in other words, if we (libzygisk.so) already forked.
@@ -658,7 +658,7 @@ static void initialize_jni_hook(void) {
   can_hook_jni = true;
   do_hook_zygote(env);
 
-  /* INFO: ART leaks through libc strings from ReZygisk. We immediately
+  /* INFO: ART leaks through libc strings from Zygisk-Ultra. We immediately
              clear them here. */
   registers_clear();
 }
@@ -694,6 +694,139 @@ static void api_plt_hook_exclude(const char *regex, const char *symbol) {
   g_ctx->ignore_info_count++;
 
   pthread_mutex_unlock(&g_ctx->hook_info_lock);
+}
+
+/* INFO: Collect candidate libraries across Bionic, ReZygisk, and loaded modules without procfs */
+static int collect_dl_libs(struct dl_phdr_info *info, size_t size, void *data) {
+  (void) size;
+
+  struct maps_info *maps = (struct maps_info *)data;
+  if (!info->dlpi_name || info->dlpi_name[0] == '\0') return 0;
+
+  for (ElfW(Half) i = 0; i < info->dlpi_phnum; i++) {
+    const ElfW(Phdr) *ph = &info->dlpi_phdr[i];
+    if (ph->p_type != PT_LOAD || ph->p_offset != 0 || !(ph->p_flags & PF_R)) continue;
+
+    struct map_entry *new_maps = realloc(maps->maps, (maps->length + 1) * sizeof(struct map_entry));
+    if (!new_maps) {
+      LOGE("Failed to reallocate memory for maps");
+
+      return 0;
+    }
+
+    struct stat st;
+    dev_t dev = 0;
+    ino_t ino = 0;
+    if (stat(info->dlpi_name, &st) == 0) {
+      dev = st.st_dev;
+      ino = st.st_ino;
+    }
+
+    maps->maps = new_maps;
+    maps->maps[maps->length++] = (struct map_entry){
+      .start = (uintptr_t)info->dlpi_addr + ph->p_vaddr,
+      .end = (uintptr_t)info->dlpi_addr + ph->p_vaddr + ph->p_memsz,
+      .offset = 0,
+      .dev = dev,
+      .inode = ino,
+      .perms = PROT_READ,
+      .is_private = true,
+      .path = strdup(info->dlpi_name)
+    };
+    if (!maps->maps[maps->length - 1].path) {
+      LOGE("Failed to duplicate path for %s", info->dlpi_name);
+
+      return 0;
+    }
+
+    break;
+  }
+
+  return 0;
+}
+
+static struct maps_info *get_loaded_libraries(void) {
+  struct maps_info *maps = calloc(1, sizeof(struct maps_info));
+  if (!maps) return NULL;
+
+  /* INFO: 1.: Libraries loaded by system linker */
+  dl_iterate_phdr(collect_dl_libs, maps);
+
+  /* INFO: 2.: ReZygisk itself (loaded via RCSOLoader) */
+  if (start_addr && block_size > 0) {
+    struct stat st;
+    if (stat("/data/adb/modules/zygiskultra/lib" LP_SELECT("", "64") "/libzygisk.so", &st) != 0) {
+      LOGE("Failed to stat ReZygisk library");
+
+      free_maps(maps);
+
+      return NULL;
+    }
+
+    struct map_entry *new_maps = realloc(maps->maps, (maps->length + 1) * sizeof(struct map_entry));
+    if (!new_maps) {
+      LOGE("Failed to reallocate memory for maps");
+
+      free_maps(maps);
+
+      return NULL;
+    }
+
+    maps->maps = new_maps;
+    maps->maps[maps->length++] = (struct map_entry) {
+      .start = (uintptr_t)start_addr,
+      .end = (uintptr_t)start_addr + block_size,
+      .offset = 0,
+      .dev = st.st_dev,
+      .inode = st.st_ino,
+      .perms = PROT_READ,
+      .is_private = true,
+      .path = strdup("/data/adb/modules/zygiskultra/lib" LP_SELECT("", "64") "/libzygisk.so")
+    };
+    if (!maps->maps[maps->length - 1].path) {
+      LOGE("Failed to duplicate path for ReZygisk");
+
+      free_maps(maps);
+
+      return NULL;
+    }
+  }
+
+  /* INFO: 3.: Zygisk modules loaded via CSOLoader */
+  for (size_t i = 0; i < zygisk_module_length; i++) {
+    struct rezygisk_module *m = &zygisk_modules[i];
+    if (!m->lib.lib_path || !m->lib.img || !m->lib.img->base) continue;
+
+    struct stat st;
+    if (stat(m->lib.lib_path, &st) != 0) {
+      LOGE("Failed to stat module library %s", m->lib.lib_path);
+
+      free_maps(maps);
+
+      return NULL;
+    }
+
+    struct map_entry *new_maps = realloc(maps->maps, (maps->length + 1) * sizeof(struct map_entry));
+    if (!new_maps) {
+      LOGE("Failed to reallocate memory for maps");
+
+      continue;
+    }
+
+    maps->maps = new_maps;
+    maps->maps[maps->length++] = (struct map_entry) {
+      .start = (uintptr_t)m->lib.img->base,
+      .end = (uintptr_t)m->lib.img->base + m->lib.img->size,
+      .offset = 0,
+      .dev = st.st_dev,
+      .inode = st.st_ino,
+      .perms = PROT_READ,
+      .is_private = true,
+      .path = strdup(m->lib.lib_path)
+    };
+  }
+
+  return maps;
 }
 
 static bool api_plt_hook_commit(void) {
@@ -1101,9 +1234,9 @@ static bool load_modules_only(void) {
       LOGE("Failed to load module [%s]", lib_path);
 
       /* INFO: In case a module failed to load, update the list of available modules
-           in ReZygiskd to avoid a mismatch between the loaded modules in ReZygisk
+           in ReZygiskd to avoid a mismatch between the loaded modules in Zygisk-Ultra
            Zygote library and the available modules in ReZygiskd. */
-      /* TODO: Update the list of modules for ReZygisk monitor, so that it can update
+      /* TODO: Update the list of modules for Zygisk-Ultra monitor, so that it can update
                  for WebUI. That is simply cosmetic, though. */
       rezygiskd_remove_module(i);
 
@@ -1505,7 +1638,7 @@ static void hook_unloader(void) {
     LOGE("Failed to load modules in hook_unloader");
   }
 
-  LOGD("ReZygisk unloader hooked successfully");
+  LOGD("Zygisk-Ultra unloader hooked successfully");
 }
 
 static void unhook_functions(void) {

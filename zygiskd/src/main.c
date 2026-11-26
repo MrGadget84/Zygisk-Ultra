@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     }
 
     else if (strcmp(argv[1], "version") == 0) {
-      LOGI("ReZygisk Daemon %s", ZKSU_VERSION);
+      LOGI("Zygisk-Ultra Daemon %s", ZKSU_VERSION);
 
       return 0;
     }

@@ -825,7 +825,7 @@ static char post_section[1024];
 
 #define WRITE_STATUS_ABI(suffix)                                                     \
   if (status ## suffix.supported) {                                                  \
-    strcat(status_text, ", ReZygisk " # suffix "-bit: ");                            \
+    strcat(status_text, ", Zygisk-Ultra " # suffix "-bit: ");                            \
                                                                                      \
     if (tracing_state != TRACING) strcat(status_text, "❌");                         \
     else if (status ## suffix.zygote_injected && status ## suffix.daemon_running)    \
@@ -844,7 +844,7 @@ static char post_section[1024];
   }
 
 static bool update_status(const char *message) {
-  FILE *prop = fopen("/data/adb/modules/rezygisk/module.prop", "w");
+  FILE *prop = fopen("/data/adb/modules/zygiskultra/module.prop", "w");
   if (prop == NULL) {
     PLOGE("failed to open prop");
 
@@ -885,7 +885,7 @@ static bool update_status(const char *message) {
   fclose(prop);
 
   if (environment_information64.root_impl || environment_information32.root_impl) {
-    FILE *json = fopen("/data/adb/rezygisk/state.json", "w");
+    FILE *json = fopen("/data/adb/zygiskultra/state.json", "w");
     if (json == NULL) {
       PLOGE("failed to open state.json");
 
@@ -958,7 +958,7 @@ static bool update_status(const char *message) {
 
     fclose(json);
   } else {
-    if (remove("/data/adb/rezygisk/state.json") == -1) {
+    if (remove("/data/adb/zygiskultra/state.json") == -1) {
       PLOGE("failed to remove state.json");
     }
   }
@@ -969,7 +969,7 @@ static bool update_status(const char *message) {
 }
 
 static bool prepare_environment() {
-  FILE *orig_prop = fopen("/data/adb/modules/rezygisk/module.prop", "r");
+  FILE *orig_prop = fopen("/data/adb/modules/zygiskultra/module.prop", "r");
   if (orig_prop == NULL) {
     PLOGE("failed to open orig prop");
 
@@ -998,7 +998,7 @@ static bool prepare_environment() {
 }
 
 void init_monitor() {
-  LOGI("ReZygisk %s", ZKSU_VERSION);
+  LOGI("Zygisk-Ultra %s", ZKSU_VERSION);
 
   if (!prepare_environment()) exit(1);
 
@@ -1055,7 +1055,7 @@ void init_monitor() {
     free((void *)environment_information32.modules);
   }
 
-  LOGI("Terminating ReZygisk monitor");
+  LOGI("Terminating Zygisk-Ultra monitor");
 }
 
 int send_control_command(enum rezygiskd_command cmd) {

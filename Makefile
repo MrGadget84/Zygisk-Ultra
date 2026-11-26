@@ -6,13 +6,15 @@ OBJ_DIR = $(BUILD_DIR)/obj/$(BUILD_TYPE)
 MODULE_OUT = $(BUILD_DIR)/module/$(BUILD_TYPE)
 ZIP_DIR = $(BUILD_DIR)/out
 
-ZKSU_VERSION = $(VER_NAME)-$(VER_CODE)-$(COMMIT_HASH)-$(BUILD_TYPE)
+ZKSU_VERSION = $(VER_NAME)-$(VER_CODE)-$(VER_CODE2)-$(COMMIT_HASH)-$(BUILD_TYPE)
 
-ZIP_NAME = $(MODULE_NAME)-$(VER_NAME)-$(VER_CODE)-$(COMMIT_HASH)-$(BUILD_TYPE).zip
+ZIP_NAME = $(MODULE_NAME)-$(VER_NAME)-$(VER_CODE)-$(VER_CODE2)-$(COMMIT_HASH)-$(BUILD_TYPE).zip
 ZIP_FILE = $(ZIP_DIR)/$(ZIP_NAME)
 
 ifeq ($(TERMUX_VERSION),)
 	ADB_CMD := adb push $(ZIP_FILE) /data/local/tmp && adb shell 
+	ADB_PUSH := adb push
+	ADB_SHELL := adb shell
 	INSTALL_PATH := /data/local/tmp/$(ZIP_NAME)
 	REBOOT_CMD := adb reboot
 else
@@ -30,7 +32,7 @@ LOADER_INPUTS = common.mk loader/Makefile \
 ZYGISKD_INPUTS = common.mk zygiskd/Makefile \
         $(shell find zygiskd/src -type f | sort)
 
-MODULE_INPUTS = scripts/sign.py \
+MODULE_INPUTS = Makefile common.mk scripts/sign.py \
         $(shell find module/src -type f | sort) \
         $(shell find webroot -type f | sort) \
         $(wildcard module/private_key module/public_key)
@@ -72,12 +74,12 @@ $(MODULE_DONE): $(LOADER_DONE) $(ZYGISKD_DONE) $(MODULE_INPUTS)
 
 
 	@echo "Copying module files..."
-	@cp module/src/verify.sh module/src/sepolicy.rule module/src/rezygisk.sh $(MODULE_OUT)/
+	@cp module/src/verify.sh module/src/sepolicy.rule module/src/zygiskultra.sh $(MODULE_OUT)/
 
 	@echo "Customizing module.prop..."
 	@sed -e 's/$${moduleId}/$(MODULE_ID)/g'                                             \
 	    -e 's/$${moduleName}/$(MODULE_NAME)/g'                                          \
-	    -e 's/$${versionName}/$(VER_NAME) ($(VER_CODE)-$(COMMIT_HASH)-$(BUILD_TYPE))/g' \
+	    -e 's/$${versionName}/$(VER_NAME) ($(VER_CODE)-$(VER_CODE2)-$(COMMIT_HASH)-$(BUILD_TYPE))/g' \
 	    -e 's/$${versionCode}/$(VER_CODE)/g'                                            \
 	    module/src/module.prop > $(MODULE_OUT)/module.prop
 
@@ -101,6 +103,8 @@ $(MODULE_DONE): $(LOADER_DONE) $(ZYGISKD_DONE) $(MODULE_INPUTS)
 
 	@echo "Copying webroot..."
 	@cp -r webroot $(MODULE_OUT)/webroot
+	@echo "Writing module info metadata..."
+	@MODULE_DISPLAY_NAME='$(MODULE_NAME)' MODULE_VERSION='$(VER_NAME)' MODULE_VERSION_CODE='$(VER_CODE)' python3 -c 'import json, os; from pathlib import Path; p=Path("$(MODULE_OUT)/webroot/module-info.json"); d=json.loads(p.read_text()); d["name"]=os.environ["MODULE_DISPLAY_NAME"]; d["version"]=os.environ["MODULE_VERSION"]; d["versionCode"]=int(os.environ["MODULE_VERSION_CODE"]); p.write_text(json.dumps(d, indent=2, ensure_ascii=False)+"\n")'
 
 	@if [ -f module/private_key ]; then                                             \
 		echo "Signing module...";                                                   \
@@ -149,3 +153,10 @@ clean:
 	rm -rf $(BUILD_DIR)
 	$(MAKE) -C loader clean BUILD_DIR=$(BUILD_DIR)
 	$(MAKE) -C zygiskd clean BUILD_DIR=$(BUILD_DIR)
+
+updateWebUI:
+	@echo Updating WebUI...
+	$(ADB_SHELL) su -c 'rm -rf /data/local/tmp/webroot'
+	$(ADB_PUSH) webroot /data/local/tmp
+	$(ADB_SHELL) su -c 'rm -rf /data/adb/modules/zygiskultra/webroot'
+	$(ADB_SHELL) su -c 'cp -r /data/local/tmp/webroot /data/adb/modules/zygiskultra'

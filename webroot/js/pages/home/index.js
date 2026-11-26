@@ -9,9 +9,9 @@ let rzState = {
 }
 
 async function _getReZygiskState() {
-  let stateCmd = await exec('/system/bin/cat /data/adb/rezygisk/state.json')
+  let stateCmd = await exec('/system/bin/cat /data/adb/zygiskultra/state.json')
   if (stateCmd.errno !== 0) {
-    toast('Error getting state of ReZygisk!')
+    toast('Error getting state of Zygisk-Ultra!')
 
     return;
   }
@@ -25,9 +25,9 @@ async function _getReZygiskState() {
 }
 
 async function _getVersion() {
-  let moduleProp = await exec('cat /data/adb/modules/rezygisk/module.prop')
+  let moduleProp = await exec('cat /data/adb/modules/zygiskultra/module.prop')
   if (moduleProp.errno !== 0) {
-    toast('Error getting state of ReZygisk!')
+    toast('Error getting state of Zygisk-Ultra!')
 
     return;
   }
@@ -83,16 +83,16 @@ async function _updateDynamicElement(firstRun, ReZygiskState, strings) {
     document.getElementById('zygote32_status')
   ]
 
-  /* INFO: Just ensure that they won't appear unless there's info */
   zygote_divs.forEach((zygote_div) => {
     zygote_div.style.display = 'none'
   })
 
   if (ReZygiskState == null) {
+    rootCss.style.setProperty('--bright', 'var(--status-error-bg)')
+    rootCss.style.setProperty('--status-text', 'var(--lock)')
     rz_state.innerHTML = strings.unknown
     rz_icon_state.innerHTML = '<img class="brightc" src="assets/mark.svg">'
     document.getElementById('zygote_class').style.display = 'none'
-    /* INFO: This hides the throbber screen */
     loading_screen.style.display = 'none'
     return;
   }
@@ -138,17 +138,21 @@ async function _updateDynamicElement(firstRun, ReZygiskState, strings) {
   }
 
   if (rzState.expectedWorking === 0 || rzState.actuallyWorking === 0) {
+    rootCss.style.setProperty('--bright', 'var(--status-error-bg)')
+    rootCss.style.setProperty('--status-text', 'var(--lock)')
     rz_state.innerHTML = strings.status.notWorking
     document.getElementById('zygote_class').style.display = 'none'
   } else if (rzState.expectedWorking === rzState.actuallyWorking) {
     rz_state.innerHTML = strings.status.ok
 
-    rootCss.style.setProperty('--bright', '#545454')
+    rootCss.style.setProperty('--bright', 'var(--status-ok-bg)')
+    rootCss.style.setProperty('--status-text', 'var(--status-ok-text)')
     rz_icon_state.innerHTML = '<img class="brightc" src="assets/tick.svg">'
   } else {
     rz_state.innerHTML = strings.status.partially
 
-    rootCss.style.setProperty('--bright', '#766000')
+    rootCss.style.setProperty('--bright', 'var(--status-partial-bg)')
+    rootCss.style.setProperty('--status-text', 'var(--lock)')
     rz_icon_state.innerHTML = '<img class="brightc" src="assets/warn.svg">'
   }
 
@@ -178,7 +182,6 @@ export async function loadOnceView() {
 
   _updateDynamicElement(true, ReZygiskState, strings)
 
-  /* INFO: This hides the throbber screen */
   loading_screen.style.display = 'none'
 }
 
